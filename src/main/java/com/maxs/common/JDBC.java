@@ -8,7 +8,7 @@ import java.util.Map;
 
 
 public class JDBC {
-    private static final String URL = "jdbc:mysql://192.168.0.54:3306/huashy?serverTimezone=PRC";
+    private static final String URL = "jdbc:mysql://192.168.0.54:3306/huashy?serverTimezone=PRC&characterEncoding=utf-8";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -22,9 +22,6 @@ public class JDBC {
      * @return 连接资源
      */
     private static Connection getConnection() {
-        if (conn != null) {
-            return conn;
-        }
         try {
             // 加载数据库驱动程序
             try {
