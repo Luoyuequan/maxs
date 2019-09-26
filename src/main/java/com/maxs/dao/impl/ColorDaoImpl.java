@@ -6,11 +6,12 @@ import com.maxs.dao.IColourDao;
 import java.util.List;
 import java.util.Map;
 
-public class ColorImpl implements IColourDao {
+public class ColorDaoImpl implements IColourDao {
 
     @Override
-    public List<Map> getColour() {
-        String sql = "select * from color";
+    public List<Map> getColour(String goodsId) {
+        String sql = "select * from colour where good_id ="+goodsId;
+
         return JDBC.excuteQuery(sql);
     }
 }
