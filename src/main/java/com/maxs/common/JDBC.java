@@ -22,9 +22,6 @@ public class JDBC {
      * @return 连接资源
      */
     private static Connection getConnection() {
-        if (conn != null) {
-            return conn;
-        }
         try {
             // 加载数据库驱动程序
             try {
