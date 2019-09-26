@@ -135,4 +135,49 @@ public class UserController {
         UserService userService = new UserService();
         return userService.deleteUser(userModel);
     }
+
+    /**
+     * 更改用户信息
+     *
+     * @param request 请求
+     * @return 更改结果信息
+     */
+    @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
+    public List<Map> updateUserInfo(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
+        int sex = request.getParameter("sex") == null ? 0 : Integer.parseInt(request.getParameter("sex"));
+        int userType = request.getParameter("userType") == null ? 1 : Integer.parseInt(request.getParameter("userType"));
+        int qq = request.getParameter("qq") == null ? 0 : Integer.parseInt(request.getParameter("qq"));
+        UserModel userModel = new UserModel();
+        userModel.setUserId(userId);
+        userModel.setNickName(request.getParameter("nickName"));
+        userModel.setRealName(request.getParameter("realName"));
+        userModel.setSex(sex);
+        userModel.setEmail(request.getParameter("email"));
+        userModel.setInsert(request.getParameter("insert"));
+        userModel.setUserType(userType);
+        userModel.setCredit(request.getParameter("credit"));
+        userModel.setQq(qq);
+        UserService userService = new UserService();
+        return userService.updateUserInfo(userModel);
+    }
+
+    /**
+     * 更改密码
+     *
+     * @param request 请求
+     * @return 更改结果信息
+     */
+    @RequestMapping(value = "/changePw", method = RequestMethod.POST)
+    public List<Map> changePw(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
+        String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
+        UserModel userModel = new UserModel();
+        userModel.setUserId(userId);
+        userModel.setPw(pw);
+        UserService userService = new UserService();
+        return userService.changePw(userModel);
+    }
 }

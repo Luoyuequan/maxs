@@ -99,6 +99,41 @@ public class UserDaoImpl implements IUserDao {
     }
 
     /**
+     * 更改密码
+     *
+     * @param userModel 用户数据模型
+     * @return 修改影响行数 0:修改失败
+     */
+    @Override
+    public int updatePasswd(UserModel userModel) {
+        String sql = "update user set pw = ? where user_id = ? or user_account = ?";
+        Object[] param = new Object[]{userModel.getPw(), userModel.getUserId(), userModel.getUserAccount()};
+        return JDBC.executeUpdate(sql, param);
+    }
+
+    /**
+     * 更改用户信息
+     *
+     * @param userModel 用户数据模型
+     * @return 修改影响行数 0:修改失败
+     */
+    @Override
+    public int updateUserInfo(UserModel userModel) {
+        String sql = "update user set " +
+                "nick_name = ?,real_name = ?,sex = ?," +
+                "email = ?,insert = ?,user_type = ?," +
+                "credit = ?,qq = ? " +
+                "where user_id = ? or user_account = ?";
+        Object[] param = new Object[]{
+                userModel.getNickName(), userModel.getRealName(), userModel.getSex(),
+                userModel.getEmail(), userModel.getInsert(), userModel.getUserType(),
+                userModel.getCredit(), userModel.getQq(),
+                userModel.getUserId(), userModel.getUserAccount()
+        };
+        return JDBC.executeUpdate(sql, param);
+    }
+
+    /**
      * 更改用户状态
      *
      * @param userModel 用户数据模型

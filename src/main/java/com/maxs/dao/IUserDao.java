@@ -62,6 +62,22 @@ public interface IUserDao {
     int updateBindQq(UserModel userModel);
 
     /**
+     * 更改密码
+     *
+     * @param userModel 用户数据模型
+     * @return 修改影响行数 0:修改失败
+     */
+    int updatePasswd(UserModel userModel);
+
+    /**
+     * 更改用户信息
+     *
+     * @param userModel 用户数据模型
+     * @return 修改影响行数 0:修改失败
+     */
+    int updateUserInfo(UserModel userModel);
+
+    /**
      * 更改用户状态
      *
      * @param userModel 用户数据模型
