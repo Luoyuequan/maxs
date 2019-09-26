@@ -10,39 +10,45 @@ import java.util.Map;
 public class UserDaoImpl implements IUserDao {
 
     /**
-     * 查询指定用户基本信息
+     * 查询指定正常状态用户基本信息
      *
      * @param userModel 用户数据模型
      * @return 基本信息list
      */
     @Override
     public List<Map> listBaseInfo(UserModel userModel) {
-        String sql = "select * from user where user_id = ? or user_account = ?";
+        String sql = "select " +
+                "user_account as userAccount,nick_name as nickName,sex," +
+                "email,insert,credit,user_type as userType " +
+                "from user " +
+                "where status = 1 and (user_id = ? or user_account = ?)";
         Object[] param = new Object[]{userModel.getUserId(), userModel.getUserAccount()};
         return JDBC.excuteQuery(sql, param);
     }
 
     /**
-     * 查询指定用户更多信息
+     * 查询指定正常状态用户更多信息
      *
      * @param userModel 用户数据模型
      * @return 更多信息list
      */
     @Override
     public List<Map> listMoreInfo(UserModel userModel) {
-        String sql = "select * from user where user_id = ? or user_account = ?";
+        String sql = "select * " +
+                "from user " +
+                "where status = 1 and (user_id = ? or user_account = ?)";
         Object[] param = new Object[]{userModel.getUserId(), userModel.getUserAccount()};
         return JDBC.excuteQuery(sql, param);
     }
 
     /**
-     * 查询所有用户信息
+     * 查询所有正常状态用户信息
      *
      * @return 所有用户信息
      */
     @Override
     public List<Map> listAllUserInfo() {
-        String sql = "select * from user";
+        String sql = "select * from user where status = 1";
         return JDBC.excuteQuery(sql);
     }
 

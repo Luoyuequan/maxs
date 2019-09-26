@@ -25,7 +25,6 @@ public class UserController {
     public List<Map> login(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        response.setHeader("Access-Control-Allow-Methods", "POST");
         String userAccount = request.getParameter("userAccount") == null ? "" : request.getParameter("userAccount");
         String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
         String lastLoginTime = String.valueOf(System.currentTimeMillis());
