@@ -63,8 +63,12 @@ public class JDBC {
                 }
                 pst.addBatch();
             }
-
-            affectedLine = pst.executeBatch().length;
+            int[] a = pst.executeBatch();
+            for (int value : a) {
+                if (value > 0) {
+                    affectedLine++;
+                }
+            }
             conn.commit();
 //            对于批量操作时，使用批处理
 //            获取insert添加成功的记录 主键值
