@@ -4,9 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.maxs.common.JDBC;
 import com.maxs.model.UserModel;
 import com.maxs.service.UserService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,18 +23,22 @@ public class UserController {
      * @return 登录信息
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map login(HttpServletRequest request, HttpServletResponse response) {
+//    @PostMapping("/login")
+    public Map login(UserModel userModel, HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        System.out.println(request.getContentType());
+//        System.out.println(request);
 //        JSON.parseObject(request,UserModel.class);
         String userAccount = request.getParameter("userAccount") == null ? "" : request.getParameter("userAccount");
         System.out.println(userAccount);
         String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
         String lastLoginTime = String.valueOf(System.currentTimeMillis());
-        UserModel userModel = new UserModel();
-        userModel.setUserAccount(userAccount);
-        userModel.setPw(pw);
+//        UserModel userModel = new UserModel();
+//        userModel.setUserAccount(userAccount);
+//        userModel.setPw(pw);
         userModel.setLastLoginTime(lastLoginTime);
+        System.out.println(userModel.getUserAccount());
         UserService userService = new UserService();
         return userService.login(userModel);
     }
@@ -147,22 +150,22 @@ public class UserController {
      * @return 更改结果信息
      */
     @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
-    public Map updateUserInfo(HttpServletRequest request, HttpServletResponse response) {
+    public Map updateUserInfo(UserModel userModel,HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         int sex = request.getParameter("sex") == null ? 0 : Integer.parseInt(request.getParameter("sex"));
         int userType = request.getParameter("userType") == null ? 1 : Integer.parseInt(request.getParameter("userType"));
         int qq = request.getParameter("qq") == null ? 0 : Integer.parseInt(request.getParameter("qq"));
-        UserModel userModel = new UserModel();
-        userModel.setUserId(userId);
-        userModel.setNickName(request.getParameter("nickName"));
-        userModel.setRealName(request.getParameter("realName"));
-        userModel.setSex(sex);
-        userModel.setEmail(request.getParameter("email"));
-        userModel.setInsert(request.getParameter("insert"));
-        userModel.setUserType(userType);
-        userModel.setCredit(request.getParameter("credit"));
-        userModel.setQq(qq);
+//        UserModel userModel = new UserModel();
+//        userModel.setUserId(userId);
+//        userModel.setNickName(request.getParameter("nickName"));
+//        userModel.setRealName(request.getParameter("realName"));
+//        userModel.setSex(sex);
+//        userModel.setEmail(request.getParameter("email"));
+//        userModel.setInsert(request.getParameter("insert"));
+//        userModel.setUserType(userType);
+//        userModel.setCredit(request.getParameter("credit"));
+//        userModel.setQq(qq);
         UserService userService = new UserService();
         return userService.updateUserInfo(userModel);
     }
