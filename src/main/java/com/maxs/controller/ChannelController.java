@@ -22,15 +22,6 @@ import java.util.Map;
 public class ChannelController {
     private ChannelService channelService = new ChannelService();
 
-    @RequestMapping
-    public String hello() {
-        return "Channel!!!";
-    }
-//    @RequestMapping
-//    public String a() {
-//        return "aaa!!!";
-//    }
-
     /**
      * 〈获取表中的所有值
      *
@@ -56,12 +47,8 @@ public class ChannelController {
     @RequestMapping("/get")
     public List<Map> getChannel(HttpServletRequest request) {
         String channelID = request.getParameter("channelID");
-//        Map map = new HashMap();
-        List<Map> list = null;
-        if (channelID != null && channelID != "") {
-            list = channelService.getChannel(Integer.parseInt(channelID));
-        }
-        return list;
+        List<Map> mapList = channelService.getChannel(channelID);
+        return mapList;
     }
 
     /**
@@ -75,10 +62,7 @@ public class ChannelController {
     @RequestMapping("/remove")
     public Map remove(HttpServletRequest request) {
         String channelID = request.getParameter("channelID");
-        Map map = new HashMap();
-        if (channelID != null && channelID != "") {
-            map = channelService.deleteC(Integer.parseInt(channelID));
-        }
+        Map map = channelService.deleteC(channelID);
         return map;
     }
 
@@ -99,7 +83,7 @@ public class ChannelController {
         channelModel.setCreateTime(request.getParameter("createTime"));
         channelModel.setUpdateTime(request.getParameter("updateTime"));
         String adminID = request.getParameter("adminID");
-        if (adminID != null&&adminID!="") {
+        if (adminID != null && adminID != "") {
             channelModel.setAdminID(Integer.parseInt(adminID));
         }
         Map map = channelService.saveC(channelModel);
@@ -121,11 +105,11 @@ public class ChannelController {
         channelModel.setChannelName(request.getParameter("channelName"));
         channelModel.setUpdateTime(request.getParameter("updateTime"));
         String adminID = request.getParameter("adminID");
-        if (adminID != null&&adminID!="") {
+        if (adminID != null && adminID != "") {
             channelModel.setAdminID(Integer.parseInt(adminID));
         }
         String channelID = request.getParameter("channelID");
-        if (channelID != null&&channelID!="") {
+        if (channelID != null && channelID != "") {
             channelModel.setChannelID(Integer.parseInt(channelID));
         }
         Map map = channelService.updateC(channelModel);

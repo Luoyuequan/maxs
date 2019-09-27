@@ -2,6 +2,7 @@ package com.maxs.controller;
 
 import com.maxs.model.GoodInfoModel;
 import com.maxs.service.GoodInfoService;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,19 +21,16 @@ import java.util.Map;
 public class GoodInfoController {
     private GoodInfoService goodInfoService = new GoodInfoService();
 
-    @RequestMapping
-    public String hello() {
-        return "GoodInfo!!!";
-    }
-
     /**
      * 〈获取good_info表中的所有值〉
+     *
      * @Param: []
      * @Return: java.util.List<java.util.Map>
      * @Author: WuGuo
      * @Date: 2019/9/26 13:23
      */
     @RequestMapping("/list")
+    @PostMapping
     public List<Map> listGoodInfo() {
         List<Map> list = goodInfoService.listGoodInfo();
         return list;
@@ -47,9 +45,10 @@ public class GoodInfoController {
      * @Date: 2019/9/26 12:43
      */
     @RequestMapping("/get")
-    public Map getName() {
-        List<Map> list = goodInfoService.getGoodInfo();
-        return list.get(0);
+    public List<Map> getGoodInfo(HttpServletRequest request) {
+        String goodInfoID = request.getParameter("goodInfoID");
+        List<Map> list = goodInfoService.getGoodInfo(goodInfoID);
+        return list;
     }
 
     /**
@@ -61,8 +60,9 @@ public class GoodInfoController {
      * @Date: 2019/9/26 12:44
      */
     @RequestMapping("/remove")
-    public int remove() {
-        return goodInfoService.deleteC();
+    public Map remove(HttpServletRequest request) {
+        String goodInfoID = request.getParameter("goodInfoID");
+        return goodInfoService.deleteC(goodInfoID);
     }
 
     /**
@@ -75,7 +75,7 @@ public class GoodInfoController {
      */
     @RequestMapping("/save")
     @ResponseBody
-    public int save(HttpServletRequest request) {
+    public Map save(HttpServletRequest request) {
         GoodInfoModel goodInfoModel = putInGoodInfModel(request);
         return goodInfoService.saveC(goodInfoModel);
     }
@@ -90,7 +90,7 @@ public class GoodInfoController {
      */
     @RequestMapping("/update")
     @ResponseBody
-    public int update(HttpServletRequest request) {
+    public Map update(HttpServletRequest request) {
         GoodInfoModel goodInfoModel = putInGoodInfModel(request);
         goodInfoModel.setInfoID(strTOInt(request.getParameter("infoID")));
         return goodInfoService.updateC(goodInfoModel);
@@ -127,4 +127,5 @@ public class GoodInfoController {
         goodInfoModel.setInterfacePhone(request.getParameter("interfacePhone"));
         return goodInfoModel;
     }
+
 }

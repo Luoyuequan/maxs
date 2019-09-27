@@ -20,11 +20,6 @@ import java.util.Map;
 public class GoodController {
     private GoodService goodService = new GoodService();
 
-    @RequestMapping
-    public String hello() {
-        return "Good!!!";
-    }
-
     /**
      * 〈获取所有的good表值〉
      * @Param: []
@@ -47,9 +42,9 @@ public class GoodController {
      * @Date: 2019/9/26 12:43
      */
     @RequestMapping("/get")
-    public Map getName() {
-        List<Map> list = goodService.getName();
-        return list.get(0);
+    public List<Map> getName(HttpServletRequest request) {
+        List<Map> list = goodService.getGood(request.getParameter("goodID"));
+        return list;
     }
 
     /**
@@ -61,8 +56,8 @@ public class GoodController {
      * @Date: 2019/9/26 12:44
      */
     @RequestMapping("/remove")
-    public int remove() {
-        return goodService.deleteC();
+    public Map remove(HttpServletRequest request) {
+        return goodService.deleteC(request.getParameter("goodID"));
     }
 
     /**
@@ -74,8 +69,8 @@ public class GoodController {
      * @Date: 2019/9/26 12:44
      */
     @RequestMapping("/save")
-    @ResponseBody
-    public int save(HttpServletRequest request) {
+//    @ResponseBody
+    public Map save(HttpServletRequest request) {
         GoodModel goodModel = putInGoodModel(request);
         return goodService.saveC(goodModel);
     }
@@ -89,8 +84,8 @@ public class GoodController {
      * @Date: 2019/9/26 12:46
      */
     @RequestMapping("/update")
-    @ResponseBody
-    public int update(HttpServletRequest request) {
+//    @ResponseBody
+    public Map update(HttpServletRequest request) {
         GoodModel goodModel = putInGoodModel(request);
         goodModel.setGoodID(strTOInt(request.getParameter("goodID")));
         return goodService.updateC(goodModel);
