@@ -18,7 +18,7 @@ public class UserDaoImpl implements IUserDao {
     @Override
     public List<Map> listBaseInfo(UserModel userModel) {
         String sql = "select " +
-                "user_id as userId,user_account as userAccount,nick_name as nickName,sex," +
+                "user_id as userId,user_account as userAccount,pw,nick_name as nickName,sex," +
                 "email,`insert`,credit,user_type as userType " +
                 "from user " +
                 "where `status` = 1 and (user_id = ? or user_account = ?)";
