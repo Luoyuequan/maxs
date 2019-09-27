@@ -20,8 +20,15 @@ public class AdminService {
         List<Map> list = adminDaoImpl.listSingleAdminInfo(adminModel);
         Map<String, Object> data = new HashMap<>();
         if (list != null) {
-            data.put("status", 1);
-            data.put("msg", "登录成功");
+            if (!list.get(0).get("pw").equals(adminModel.getPw())){
+                data.put("adminId",list.get(0).get("adminId"));
+                data.put("status", 0);
+                data.put("msg", "登录失败");
+            }
+            else {
+                data.put("status", 1);
+                data.put("msg", "登录成功");
+            }
         } else {
             data.put("status", 0);
             data.put("msg", "登录失败");
