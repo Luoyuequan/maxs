@@ -27,11 +27,11 @@ public class GoodTypeService {
         List<Map> msg = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         if (insertResult > 0) {
-            map.put("status", insertResult);
+            map.put("status", 1);
             map.put("msg", "新增成功");
             msg.add(map);
         } else {
-            map.put("status", insertResult);
+            map.put("status", 0);
             map.put("msg", "新增失败");
             msg.add(map);
         }
@@ -43,11 +43,11 @@ public class GoodTypeService {
         List<Map> msg = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         if (updateResult > 0) {
-            map.put("status", updateResult);
+            map.put("status", 1);
             map.put("msg", "删除成功");
             msg.add(map);
         } else {
-            map.put("status", updateResult);
+            map.put("status", 0);
             map.put("msg", "删除失败");
             msg.add(map);
         }
@@ -59,11 +59,11 @@ public class GoodTypeService {
         List<Map> msg = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         if (updateResult > 0) {
-            map.put("status", updateResult);
+            map.put("status", 1);
             map.put("msg", "修改成功");
             msg.add(map);
         } else {
-            map.put("status", updateResult);
+            map.put("status", 0);
             map.put("msg", "修改失败");
             msg.add(map);
         }

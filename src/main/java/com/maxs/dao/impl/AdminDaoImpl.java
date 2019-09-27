@@ -16,7 +16,9 @@ public class AdminDaoImpl implements IAdminDao {
      */
     @Override
     public List<Map> listSingleAdminInfo(AdminModel adminModel) {
-        String sql = "select * from admin where admin_id = ? or admin_name = ?";
+        String sql = "select " +
+                "admin_id as adminId,admin_name as adminName,pw,create_time as createTime,last_login_time as lastLoginTime " +
+                "from admin where `status` = 1 and (admin_id = ? or admin_name = ?)";
         Object[] param = new Object[]{adminModel.getAdminId(), adminModel.getAdminName()};
         return JDBC.excuteQuery(sql, param);
     }
@@ -28,7 +30,7 @@ public class AdminDaoImpl implements IAdminDao {
      */
     @Override
     public List<Map> listAllAdminInfo() {
-        String sql = "select * from admin";
+        String sql = "select admin_id as adminId,admin_name as adminName,pw,create_time as createTime,last_login_time as lastLoginTime from admin where `status` = 1";
         return JDBC.excuteQuery(sql);
     }
 
@@ -79,7 +81,7 @@ public class AdminDaoImpl implements IAdminDao {
      */
     @Override
     public int updateAdminStatus(AdminModel adminModel) {
-        String sql = "update admin set status = ? where admin_id = ? or admin_name = ?";
+        String sql = "update admin set `status` = ? where admin_id = ? or admin_name = ?";
         Object[] param = new Object[]{adminModel.getStatus(), adminModel.getAdminId(), adminModel.getAdminName()};
         return JDBC.executeUpdate(sql, param);
     }

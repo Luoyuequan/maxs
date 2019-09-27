@@ -16,23 +16,24 @@ public class AdminService {
         this.adminDaoImpl = new AdminDaoImpl();
     }
 
-    public List<Map> login(AdminModel adminModel) {
-        return adminDaoImpl.listSingleAdminInfo(adminModel);
+    public Map login(AdminModel adminModel) {
+        List<Map> list = adminDaoImpl.listSingleAdminInfo(adminModel);
+        Map<String, Object> data = new HashMap<>();
+        if (list != null) {
+            data.put("status", 1);
+            data.put("msg", "登录成功");
+        } else {
+            data.put("status", 0);
+            data.put("msg", "登录失败");
+        }
+        return data;
     }
 
-    public List<Map> logout() {
-        List<Map> msg = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
-//        if (insertResult > 0) {
-//            map.put("status", insertResult);
-        map.put("msg", "注销成功");
-        msg.add(map);
-//        } else {
-//            map.put("status", insertResult);
-//            map.put("msg", "删除失败");
-//            msg.add(map);
-//        }
-        return msg;
+    public Map logout() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("status",1);
+        data.put("msg", "注销成功");
+        return data;
     }
 
     public List<Map> listSingleInfo(AdminModel adminModel) {
@@ -59,19 +60,16 @@ public class AdminService {
         return msg;
     }
 
-    public List<Map> deleteAdmin(AdminModel adminModel) {
+    public Map deleteAdmin(AdminModel adminModel) {
         int updateResult = adminDaoImpl.updateAdminStatus(adminModel);
-        List<Map> msg = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         if (updateResult > 0) {
             map.put("status", updateResult);
             map.put("msg", "删除成功");
-            msg.add(map);
         } else {
             map.put("status", updateResult);
             map.put("msg", "删除失败");
-            msg.add(map);
         }
-        return msg;
+        return map;
     }
 }

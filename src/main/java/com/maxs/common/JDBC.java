@@ -164,10 +164,10 @@ public class JDBC {
         int columnCount = 0;
         try {
 //            结果集的结构信息
-            rsmd = rst.getMetaData();
+            rsmd = rst == null ? null : rst.getMetaData();
 
             // 获得结构的字段列数
-            columnCount = rsmd.getColumnCount();
+            columnCount = rsmd == null ? 0 : rsmd.getColumnCount();
         } catch (SQLException e1) {
             e1.printStackTrace();
         }
@@ -177,7 +177,7 @@ public class JDBC {
         try {
             // 将ResultSet的结果保存到List中
 //            遍历结果集
-            while (rst.next()) {
+            while (rst != null && rst.next()) {
                 Map<String, Object> map = new HashMap<>();
 //                单条结果中 循环装载 字段名=字段值
                 for (int i = 1; i <= columnCount; i++) {

@@ -21,7 +21,7 @@ public class AdminController {
      * @return 登录信息
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public List<Map> login(HttpServletRequest request, HttpServletResponse response) {
+    public Map login(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         response.setHeader("Access-Control-Allow-Methods", "POST");
@@ -43,7 +43,7 @@ public class AdminController {
      * @return 注销信息
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public List<Map> logout(HttpServletRequest request, HttpServletResponse response) {
+    public Map logout(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 //        response.setHeader("Access-Control-Allow-Methods", "GET");
@@ -107,8 +107,8 @@ public class AdminController {
      * @param request 请求
      * @return 更改结果信息
      */
-    @RequestMapping(value = "/deleteAdmin", method = RequestMethod.POST)
-    public List<Map> deleteAdmin(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/deleteAdmin", method = RequestMethod.GET)
+    public Map deleteAdmin(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int adminId = request.getParameter("adminId") == null ? 0 : Integer.parseInt(request.getParameter("adminId"));
         int userStatus = 2;

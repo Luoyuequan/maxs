@@ -28,86 +28,75 @@ public class UserService {
         return userDaoImpl.listAllUserInfo();
     }
 
-    public List<Map> registerUser(UserModel userModel) {
+    public Map registerUser(UserModel userModel) {
         int insertResult = userDaoImpl.insertUserInfo(userModel);
-        List<Map> msg = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         if (insertResult > 0) {
-            map.put("status", insertResult);
-            map.put("msg", "新增成功");
-            msg.add(map);
+            data.put("status", 1);
+            data.put("msg", "新增成功");
         } else {
-            map.put("status", insertResult);
-            map.put("msg", "新增失败");
-            msg.add(map);
+            data.put("status", 0);
+            data.put("msg", "新增失败");
         }
-        return msg;
+        return data;
     }
 
-    public List<Map> login(UserModel userModel) {
-        return userDaoImpl.listBaseInfo(userModel);
+    public Map login(UserModel userModel) {
+        List<Map> list = userDaoImpl.listBaseInfo(userModel);
+        Map<String, Object> data = new HashMap<>();
+        if (list != null) {
+            data.put("status", 1);
+            data.put("msg", "登录成功");
+        } else {
+            data.put("status", 0);
+            data.put("msg", "登录失败");
+        }
+        return data;
     }
 
-    public List<Map> deleteUser(UserModel userModel) {
+    public Map deleteUser(UserModel userModel) {
         int updateResult = userDaoImpl.updateUserStatus(userModel);
-        List<Map> msg = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         if (updateResult > 0) {
-            map.put("status", updateResult);
-            map.put("msg", "删除成功");
-            msg.add(map);
+            data.put("status", updateResult);
+            data.put("msg", "删除成功");
         } else {
-            map.put("status", updateResult);
-            map.put("msg", "删除失败");
-            msg.add(map);
+            data.put("status", updateResult);
+            data.put("msg", "删除失败");
         }
-        return msg;
+        return data;
     }
 
-    public List<Map> logout() {
-        List<Map> msg = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
-//        if (insertResult > 0) {
-//            map.put("status", insertResult);
-        map.put("msg", "注销成功");
-        msg.add(map);
-//        } else {
-//            map.put("status", insertResult);
-//            map.put("msg", "删除失败");
-//            msg.add(map);
-//        }
-        return msg;
+    public Map logout() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("status",1);
+        data.put("msg", "注销成功");
+        return data;
     }
 
-    public List<Map> updateUserInfo(UserModel userModel) {
+    public Map updateUserInfo(UserModel userModel) {
         int updateResult = userDaoImpl.updateUserInfo(userModel);
-        List<Map> msg = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         if (updateResult > 0) {
-            map.put("status", updateResult);
-            map.put("msg", "修改成功");
-            msg.add(map);
+            data.put("status", 1);
+            data.put("msg", "修改成功");
         } else {
-            map.put("status", updateResult);
-            map.put("msg", "修改失败");
-            msg.add(map);
+            data.put("status", 0);
+            data.put("msg", "修改失败");
         }
-        return msg;
+        return data;
     }
 
-    public List<Map> changePw(UserModel userModel) {
+    public Map changePw(UserModel userModel) {
         int updateResult = userDaoImpl.updatePasswd(userModel);
-        List<Map> msg = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         if (updateResult > 0) {
-            map.put("status", updateResult);
-            map.put("msg", "修改成功");
-            msg.add(map);
+            data.put("status", 1);
+            data.put("msg", "修改成功");
         } else {
-            map.put("status", updateResult);
-            map.put("msg", "修改失败");
-            msg.add(map);
+            data.put("status", 0);
+            data.put("msg", "修改失败");;
         }
-        return msg;
+        return data;
     }
 }

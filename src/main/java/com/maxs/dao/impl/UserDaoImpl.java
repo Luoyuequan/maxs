@@ -19,9 +19,9 @@ public class UserDaoImpl implements IUserDao {
     public List<Map> listBaseInfo(UserModel userModel) {
         String sql = "select " +
                 "user_account as userAccount,nick_name as nickName,sex," +
-                "email,insert,credit,user_type as userType " +
+                "email,`insert`,credit,user_type as userType " +
                 "from user " +
-                "where status = 1 and (user_id = ? or user_account = ?)";
+                "where `status` = 1 and (user_id = ? or user_account = ?)";
         Object[] param = new Object[]{userModel.getUserId(), userModel.getUserAccount()};
         return JDBC.excuteQuery(sql, param);
     }
@@ -36,7 +36,7 @@ public class UserDaoImpl implements IUserDao {
     public List<Map> listMoreInfo(UserModel userModel) {
         String sql = "select * " +
                 "from user " +
-                "where status = 1 and (user_id = ? or user_account = ?)";
+                "where `status` = 1 and (user_id = ? or user_account = ?)";
         Object[] param = new Object[]{userModel.getUserId(), userModel.getUserAccount()};
         return JDBC.excuteQuery(sql, param);
     }
@@ -48,7 +48,7 @@ public class UserDaoImpl implements IUserDao {
      */
     @Override
     public List<Map> listAllUserInfo() {
-        String sql = "select * from user where status = 1";
+        String sql = "select * from user where `status` = 1";
         return JDBC.excuteQuery(sql);
     }
 
@@ -127,7 +127,7 @@ public class UserDaoImpl implements IUserDao {
     public int updateUserInfo(UserModel userModel) {
         String sql = "update user set " +
                 "nick_name = ?,real_name = ?,sex = ?," +
-                "email = ?,insert = ?,user_type = ?," +
+                "email = ?,`insert` = ?,user_type = ?," +
                 "credit = ?,qq = ? " +
                 "where user_id = ? or user_account = ?";
         Object[] param = new Object[]{
@@ -147,7 +147,7 @@ public class UserDaoImpl implements IUserDao {
      */
     @Override
     public int updateUserStatus(UserModel userModel) {
-        String sql = "update user set status = ? where user_id = ? or user_account = ?";
+        String sql = "update user set `status` = ? where user_id = ? or user_account = ?";
         Object[] param = new Object[]{userModel.getStatus(), userModel.getUserId(), userModel.getUserAccount()};
         return JDBC.executeUpdate(sql, param);
     }

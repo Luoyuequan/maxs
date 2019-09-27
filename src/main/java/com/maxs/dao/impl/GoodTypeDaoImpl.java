@@ -64,7 +64,7 @@ public class GoodTypeDaoImpl implements IGoodTypeDao {
      */
     @Override
     public int updateGoodTypeStatus(GoodTypeModel goodTypeModel) {
-        String sql = "update good_type set status = ?,update_time = ?,admin_id = ? where good_type_id = ?";
+        String sql = "update good_type set `status` = ?,update_time = ?,admin_id = ? where good_type_id = ?";
         Object[] param = new Object[]{
                 goodTypeModel.getStatus(),
                 goodTypeModel.getUpdateTime(),
