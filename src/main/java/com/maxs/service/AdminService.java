@@ -19,7 +19,7 @@ public class AdminService {
     public Map login(AdminModel adminModel) {
         List<Map> list = adminDaoImpl.listSingleAdminInfo(adminModel);
         Map<String, Object> data = new HashMap<>();
-        if (list != null) {
+        if (list.size()>0) {
             if (!list.get(0).get("pw").equals(adminModel.getPw())){
                 data.put("adminId",list.get(0).get("adminId"));
                 data.put("status", 0);

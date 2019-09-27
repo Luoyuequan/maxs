@@ -44,7 +44,7 @@ public class UserService {
     public Map login(UserModel userModel) {
         List<Map> list = userDaoImpl.listBaseInfo(userModel);
         Map<String, Object> data = new HashMap<>();
-        if (list != null) {
+        if (list.size()>0) {
             if (!list.get(0).get("pw").equals(userModel.getPw())){
                 data.put("userId",list.get(0).get("userId"));
                 data.put("status", 0);
