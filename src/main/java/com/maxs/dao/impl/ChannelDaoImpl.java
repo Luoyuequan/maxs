@@ -19,7 +19,7 @@ public class ChannelDaoImpl implements IChannelDao {
     public List<Map> listChannelAll() {
         String sql = "SELECT channel_id as channelID,channel_name as channelName," +
                 "create_time as createTime,update_time as updateTime," +
-                "admin_id as adminID,status" +
+                "admin_id as adminID,`status`" +
                 " FROM channel";
         return JDBC.excuteQuery(sql);
     }
@@ -36,7 +36,7 @@ public class ChannelDaoImpl implements IChannelDao {
     public List<Map> getChannelByID(int channelID) {
         String sql = "SELECT channel_id as channelID,channel_name as channelName," +
                 "create_time as createTime,update_time as updateTime," +
-                "admin_id as adminID,status" +
+                "admin_id as adminID,`status`" +
                 " FROM channel WHERE channel_id=?";
         return JDBC.excuteQuery(sql, new Object[]{channelID});
     }
@@ -51,7 +51,7 @@ public class ChannelDaoImpl implements IChannelDao {
      */
     @Override
     public int removeChannelByID(int channelID) {
-        String sql = "UPDATE channel SET status = 0 WHERE channel_id = ?";
+        String sql = "UPDATE channel SET `status` = 0 WHERE channel_id = ?";
         return JDBC.executeUpdate(sql, new Object[]{channelID});
     }
 
