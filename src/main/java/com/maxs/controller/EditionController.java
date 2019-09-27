@@ -2,6 +2,7 @@ package com.maxs.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.maxs.common.ReturnMap;
 import com.maxs.model.EditionModel;
 import com.maxs.service.EditionService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,19 +18,19 @@ import java.util.Map;
 @RestController
 public class EditionController {
 
+    ReturnMap returnMap = new ReturnMap();
     /**
      * 版本查询-----根据商品id
      * @param request
      * @param response
      * @return
      */
-    @RequestMapping(value = "/getEdition")
+    @RequestMapping(value = "/getEdition",method = RequestMethod.POST)
     public String getEdition(HttpServletRequest request, HttpServletResponse response){
-        String goodsId = request.getParameter("good_id");
+        String goodsId = request.getParameter("goodId");
         EditionService editionService = new EditionService();
         List<Map> list = editionService.getEdition(goodsId);
-        String json = JSON.toJSONString(list);
-        return json;
+        return returnMap.getGetReMap(list);
     }
 
     /**
@@ -38,74 +39,51 @@ public class EditionController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/updateEdition")
+    @RequestMapping(value = "/updateEdition",method = RequestMethod.POST)
     public String updateEdition(HttpServletRequest request,HttpServletResponse response){
-        String goodsId = request.getParameter("good_id");
-        String oldEditionName = request.getParameter("old_edition_name");
-        String newEditionName = request.getParameter("new_edition_name");
+        String editionId = request.getParameter("editionId");
+
+        String newEditionName = request.getParameter("newEditionName");
         EditionModel editionModel = new EditionModel();
-        editionModel.setGoodId(goodsId);
-        editionModel.setEditionName(oldEditionName);
+        editionModel.setEditionId(editionId);
         EditionService editionService = new EditionService();
         int i = editionService.updateEditionName(editionModel,newEditionName);
-        Map<String,String> map = new HashMap<>();
-        if (i>0){
-            map.put("retCode","1");
-            map.put("retMsg","修改成功");
-        }else {
-            map.put("retCode","0");
-            map.put("retMsg","修改失败");
-        }
-        String json = JSON.toJSONString(map);
-        return json;
+        return returnMap.getUpdateReMap(i);
     }
 
     /**
-     * 版本修改
+     * 版本删除
      * @param request good_id，edition_name
      * @param response json
      * @return
      */
-    @RequestMapping(value = "/delEdition")
+    @RequestMapping(value = "/delEdition",method = RequestMethod.POST)
     public String delEdition(HttpServletRequest request,HttpServletResponse response){
-        String goodsId = request.getParameter("good_id");
-        String editionName = request.getParameter("edition_name");
+        String editionId = request.getParameter("editionId");
         EditionModel editionModel = new EditionModel();
-        editionModel.setGoodId(goodsId);
-        editionModel.setEditionName(editionName);
+
+        editionModel.setEditionId(editionId);
         EditionService editionService = new EditionService();
         int i = editionService.delEdition(editionModel);
-        Map<String,String> map = new HashMap<>();
-        if (i>0){
-            map.put("retCode","1");
-            map.put("retMsg","删除成功");
-        }else {
-            map.put("retCode","0");
-            map.put("retMsg","删除失败");
-        }
-        String json = JSON.toJSONString(map);
-        return json;
+        return returnMap.getdelReMap(i);
     }
 
+    /**
+     * 添加版本
+     * @param request
+     * @param response
+     * @return
+     */
 
-    @RequestMapping("/addEdition")
+    @RequestMapping(value = "/addEdition",method = RequestMethod.POST)
     public String addEdition(HttpServletRequest request,HttpServletResponse response){
-        String goodsId = request.getParameter("good_id");
-        String editionName = request.getParameter("edition_name");
+        String goodsId = request.getParameter("goodId");
+        String editionName = request.getParameter("editionName");
         EditionModel editionModel = new EditionModel();
         editionModel.setGoodId(goodsId);
         editionModel.setEditionName(editionName);
         EditionService editionService = new EditionService();
         int i = editionService.addEdition(editionModel);
-        Map<String,String> map = new HashMap<>();
-        if (i>0){
-            map.put("retCode","1");
-            map.put("retMsg","删除成功");
-        }else {
-            map.put("retCode","0");
-            map.put("retMsg","删除失败");
-        }
-        String json = JSON.toJSONString(map);
-        return json;
+        return returnMap.getaddReMap(i);
     }
 }
