@@ -15,6 +15,7 @@ import java.util.Map;
 public class GoodInfoDaoImpl implements IGoodInfoDao {
     /**
      * 〈获取good_info表中所有的值〉
+     *
      * @Param: []
      * @Return: java.util.List<java.util.Map>
      * @Author: WuGuo
@@ -23,7 +24,7 @@ public class GoodInfoDaoImpl implements IGoodInfoDao {
     @Override
     public List<Map> listGoodInfoAll() {
         String sql = "SELECT info_id as infoID,good_id as goodID,brand,weight," +
-                "origin,interface_phone as interfacePhone,status FROM good_info";
+                "origin,interface_phone as interfacePhone,`status` FROM good_info WHERE `status`=1";
         return JDBC.excuteQuery(sql);
     }
 
@@ -38,7 +39,7 @@ public class GoodInfoDaoImpl implements IGoodInfoDao {
     @Override
     public List<Map> getGoodInfoByID(int goodInfoID) {
         String sql = "SELECT info_id as infoID, good_id as goodID,brand,weight,origin," +
-                "interface_phone as interfacePhone,status FROM good_info WHERE info_id=?";
+                "interface_phone as interfacePhone,`status` FROM good_info WHERE info_id=? AND `status`=1";
         return JDBC.excuteQuery(sql, new Object[]{goodInfoID});
     }
 
@@ -52,7 +53,7 @@ public class GoodInfoDaoImpl implements IGoodInfoDao {
      */
     @Override
     public int removeGoodInfoByID(int goodInfoID) {
-        String sql = "UPDATE good_info SET status = 0 WHERE info_id = ?";
+        String sql = "UPDATE good_info SET `status` = 0 WHERE info_id = ?";
         return JDBC.executeUpdate(sql, new Object[]{goodInfoID});
     }
 
@@ -67,7 +68,7 @@ public class GoodInfoDaoImpl implements IGoodInfoDao {
     @Override
     public int saveGoodInfo(GoodInfoModel goodInfo) {
         String sql = "INSERT INTO good_info " +
-                "(good_id,brand,weight,origin,interface_phone" +
+                "(good_id,brand,weight,origin,interface_phone) " +
                 "VALUES (?,?,?,?,?);";
         Object[] object = new Object[]{goodInfo.getGoodID(), goodInfo.getBrand(),
                 goodInfo.getWeight(), goodInfo.getOrigin(), goodInfo.getInterfacePhone()};

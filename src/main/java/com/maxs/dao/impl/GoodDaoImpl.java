@@ -20,7 +20,7 @@ public class GoodDaoImpl implements IGoodDao {
         String sql = "SELECT good_id as goodID,good_name as goodName," +
                 "type_id as typeID,channel_id as channelID," +
                 "price,admin_id as adminID,create_time as createTime," +
-                "update_time as updateTime,hot,banner,status" +
+                "update_time as updateTime,hot,banner,`status`" +
                 " FROM good";
         return JDBC.excuteQuery(sql);
     }
@@ -37,7 +37,7 @@ public class GoodDaoImpl implements IGoodDao {
         String sql = "SELECT good_id as goodID,good_name as goodName," +
                 "type_id as typeID,channel_id as channelID," +
                 "price,admin_id as adminID,create_time as createTime," +
-                "update_time as updateTime,hot,banner,status" +
+                "update_time as updateTime,hot,banner,`status`" +
                 " FROM good WHERE good_id=?";
         return JDBC.excuteQuery(sql, new Object[]{goodID});
     }
@@ -51,7 +51,7 @@ public class GoodDaoImpl implements IGoodDao {
      */
     @Override
     public int removeGoodByID(int goodID) {
-        String sql = "UPDATE good SET status = 0 WHERE good_id = ?";
+        String sql = "UPDATE good SET `status` = 0 WHERE good_id = ?";
         return JDBC.executeUpdate(sql, new Object[]{goodID});
     }
 

@@ -55,7 +55,7 @@ public class JDBC {
             conn.setAutoCommit(false);
             // 调用SQL
 //            insert 获取返回值 Statement.RETURN_GENERATED_KEYS
-            pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pst = conn.prepareStatement(sql);
             for (Object[] param : params) {
                 // 参数赋值
                 for (int i = 0; i < param.length; i++) {
@@ -63,8 +63,13 @@ public class JDBC {
                 }
                 pst.addBatch();
             }
-
-            affectedLine = pst.executeBatch().length;
+             int[]a = pst.executeBatch();
+            for (int value : a) {
+                if (value > 0) {
+                    affectedLine++;
+                }
+            }
+//            affectedLine = a.length;
             conn.commit();
 //            对于批量操作时，使用批处理
 //            获取insert添加成功的记录 主键值
