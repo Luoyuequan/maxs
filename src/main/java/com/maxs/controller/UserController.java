@@ -1,5 +1,6 @@
 package com.maxs.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.maxs.common.RequestIsJson;
 import com.maxs.model.UserModel;
 import com.maxs.service.UserService;
@@ -25,14 +26,17 @@ public class UserController {
      * @param request 请求
      * @return 登录信息
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST,produces = "application/json")
 //    @PostMapping("/login")
-    public Map login(HttpServletRequest request, HttpServletResponse response) {
+    public Map login(@RequestBody UserModel userModel, HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("application/json");
         System.out.println(request.getContentType());
+        System.out.println(request.getHeader("Origin"));
+        System.out.println(request.getHeader("Accept"));
         String lastLoginTime = String.valueOf(System.currentTimeMillis());
-        userModel = requestIsJson.getJsonToModel(request, claszz);
+//        userModel = requestIsJson.getJsonToModel(request, claszz);
         userModel.setLastLoginTime(lastLoginTime);
         System.out.println(userModel.getUserAccount());
         System.out.println(userModel.getPw());
