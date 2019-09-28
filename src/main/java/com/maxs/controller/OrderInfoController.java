@@ -1,7 +1,9 @@
 package com.maxs.controller;
 
+import com.maxs.common.RequestIsJson;
 import com.maxs.common.ReturnMap;
 import com.maxs.model.OrderInfoModel;
+import com.maxs.model.OrderModel;
 import com.maxs.service.OrderInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +20,8 @@ public class OrderInfoController {
     ReturnMap returnMap = new ReturnMap();
     OrderInfoModel orderInfoModel = new OrderInfoModel();
     OrderInfoService orderInfoService = new OrderInfoService();
-
+    private Class claszz = OrderInfoModel.class;
+    private RequestIsJson<OrderInfoModel> requestIsJson = new RequestIsJson<>();
 
     /**
      * 根据order_id获取该订单存在的所有商品
@@ -28,8 +31,8 @@ public class OrderInfoController {
     @RequestMapping(value = "/getOrderInfo", method = RequestMethod.POST)
     public String getOrderInfo(HttpServletRequest request, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-        String orderId = request.getParameter("orderId");
-        orderInfoModel.setOrderId(orderId);
+
+        orderInfoModel = requestIsJson.getJsonToModel(request, claszz);
         List<Map> list = orderInfoService.getOrderInfo(orderInfoModel);
         return returnMap.getGetReMap(list);
     }
@@ -38,13 +41,7 @@ public class OrderInfoController {
     public String addOrderInfo(HttpServletRequest request,HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
         String createTime = String.valueOf(System.currentTimeMillis());
-        orderInfoModel.setOrderId(request.getParameter("orderId"));
-        orderInfoModel.setGoodId(request.getParameter("goodId"));
-        orderInfoModel.setPrice(request.getParameter("price"));
-        orderInfoModel.setUserId(request.getParameter("userId"));
-        orderInfoModel.setNum(request.getParameter("num"));
-        orderInfoModel.setColourId(request.getParameter("colourId"));
-        orderInfoModel.setEditionId(request.getParameter("editionId"));
+        orderInfoModel = requestIsJson.getJsonToModel(request, claszz);
         orderInfoModel.setCreateTime(createTime);
         orderInfoModel.setStatus("1");
         int i = orderInfoService.addOrderInfo(orderInfoModel);

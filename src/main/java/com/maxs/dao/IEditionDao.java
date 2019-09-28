@@ -8,7 +8,7 @@ import java.util.Map;
 public interface IEditionDao {
     List<Map> getEditon(String goodsId);
 
-    int updateEdition(EditionModel editionModel,String newEditionName);
+    int updateEdition(EditionModel editionModel);
 
     int delEdition(EditionModel editionModel);
 

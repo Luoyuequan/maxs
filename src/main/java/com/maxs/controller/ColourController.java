@@ -1,5 +1,6 @@
 package com.maxs.controller;
 
+import com.maxs.common.RequestIsJson;
 import com.maxs.common.ReturnMap;
 import com.maxs.model.ColourModel;
 import com.maxs.service.ColourService;
@@ -16,7 +17,9 @@ import java.util.Map;
 public class ColourController {
     ReturnMap returnMap = new ReturnMap();
     ColourService colourService = new ColourService();
-    ColourModel colourModel = new ColourModel();
+    ColourModel colourModel;
+    private Class claszz = ColourModel.class;
+    private RequestIsJson<ColourModel> requestIsJson = new RequestIsJson<>();
     /**
      * 根据goodsId查询手机有的颜色
      * @param request
@@ -26,9 +29,8 @@ public class ColourController {
     @RequestMapping(value = "/getColour",method = RequestMethod.POST)
     public String getColour(HttpServletRequest request, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-
-        String goodsID = request.getParameter("goodsId");
-        List<Map> list=colourService.getColour(goodsID);
+        colourModel = requestIsJson.getJsonToModel(request, claszz);
+        List<Map> list=colourService.getColour(colourModel.getGoodsId());
         return returnMap.getGetReMap(list);
     }
 
@@ -41,8 +43,8 @@ public class ColourController {
     @RequestMapping(value = "/delColor",method = RequestMethod.POST)
     public String delColour(HttpServletRequest request,HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-        String colourId = request.getParameter("colour_id");
-        int i = colourService.delColour(colourId);
+        colourModel = requestIsJson.getJsonToModel(request, claszz);
+        int i = colourService.delColour(colourModel.getColourId());
         return returnMap.getdelReMap(i);
     }
 
@@ -55,12 +57,7 @@ public class ColourController {
     @RequestMapping(value = "/addColor",method = RequestMethod.POST)
     public String addColour(HttpServletRequest request,HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-        String goodId = request.getParameter("goodId");
-        String colourName = request.getParameter("colourName");
-        String colourUrl = request.getParameter("colourUrl");
-        colourModel.setGoodsId(goodId);
-        colourModel.setColourUrl(colourName);
-        colourModel.setColourName(colourUrl);
+        colourModel = requestIsJson.getJsonToModel(request, claszz);
         int i = colourService.addColour(colourModel);
         return returnMap.getaddReMap(i);
     }

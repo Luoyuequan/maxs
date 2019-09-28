@@ -18,11 +18,11 @@ public class EditionDaoImpl implements IEditionDao {
     }
 
     @Override
-    public int updateEdition(EditionModel editionModel,String newEditionName) {
+    public int updateEdition(EditionModel editionModel) {
 
         String sql = "update edition set edition_name = ? where edition_id = ?";
 
-        Object[] objects = new Object[]{newEditionName,editionModel.getEditionId()};
+        Object[] objects = new Object[]{editionModel.getEditionName(),editionModel.getEditionId()};
         return JDBC.executeUpdate(sql,objects);
     }
 

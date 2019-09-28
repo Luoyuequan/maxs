@@ -15,10 +15,10 @@ public class EditionService {
         return iEditionDao.getEditon(goodsId);
     }
 
-    public int updateEditionName(EditionModel editionModel,String newEditionName) {
+    public int updateEditionName(EditionModel editionModel) {
 
         IEditionDao iEditionDao = new EditionDaoImpl();
-        return iEditionDao.updateEdition(editionModel,newEditionName);
+        return iEditionDao.updateEdition(editionModel);
     }
 
     public int delEdition(EditionModel editionModel) {

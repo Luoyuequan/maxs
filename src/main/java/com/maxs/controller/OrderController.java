@@ -2,7 +2,9 @@ package com.maxs.controller;
 
 
 
+import com.maxs.common.RequestIsJson;
 import com.maxs.common.ReturnMap;
+import com.maxs.model.ColourModel;
 import com.maxs.model.OrderModel;
 import com.maxs.service.OrderService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,11 @@ import java.util.Map;
 @RestController
 public class OrderController {
 
-    OrderModel orderModel = new OrderModel();
+    OrderModel orderModel;
     OrderService orderService = new OrderService();
     ReturnMap returnMap = new ReturnMap();
+    private Class claszz = OrderModel.class;
+    private RequestIsJson<OrderModel> requestIsJson = new RequestIsJson<>();
     /**
      * 根据用户id与state来查询订单
      * @param request user_id
@@ -29,12 +33,8 @@ public class OrderController {
     public String getOrder(HttpServletRequest request, HttpServletResponse response){
 
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-        String userId = request.getParameter("userId");
-        String state = request.getParameter("state");
 
-        orderModel.setUserId(userId);
-        orderModel.setState(state);
-
+        orderModel = requestIsJson.getJsonToModel(request, claszz);
         List<Map> list = orderService.getOrder(orderModel);
         return returnMap.getGetReMap(list);
     }
@@ -49,10 +49,7 @@ public class OrderController {
     @RequestMapping(value = "/getOrderByState",method = RequestMethod.POST)
     public String getOrderByState(HttpServletRequest request,HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-        String userId = request.getParameter("userId");
-
-        orderModel.setUserId(userId);
-
+        orderModel = requestIsJson.getJsonToModel(request, claszz);
         List<Map> list = orderService.getOrderByState(orderModel);
 
         return returnMap.getGetReMap(list);
@@ -67,16 +64,10 @@ public class OrderController {
     @RequestMapping(value = "/updateOrderState",method = RequestMethod.POST)
     public String updateOrderState(HttpServletRequest request,HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-        String orderId = request.getParameter("orderId");
-        String state = request.getParameter("state");
-
+        orderModel = requestIsJson.getJsonToModel(request, claszz);
         String updateTime= String.valueOf(System.currentTimeMillis());
-
-        orderModel.setOrderId(orderId);
         orderModel.setUpdateTime(updateTime);
-        orderModel.setState(state);
         int i = orderService.updateOrder(orderModel);
-
         return returnMap.getUpdateReMap(i);
     }
 
@@ -90,11 +81,7 @@ public class OrderController {
     @RequestMapping(value = "/updateOrderStatus",method = RequestMethod.POST)
     public String updateOrderStatus(HttpServletRequest request,HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-        String orderId = request.getParameter("orderId");
-        String status = request.getParameter("status");
-
-        orderModel.setOrderId(orderId);
-        orderModel.setStatus(status);
+        orderModel = requestIsJson.getJsonToModel(request, claszz);
         int i = orderService.updateOrderstatus(orderModel);
         return returnMap.getUpdateReMap(i);
     }
@@ -109,11 +96,9 @@ public class OrderController {
 
     public String addOrder(HttpServletRequest request,HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
-        String userId = request.getParameter("userId");
-        String money = request.getParameter("money");
+
         String createTime= String.valueOf(System.currentTimeMillis());
-        orderModel.setUserId(userId);
-        orderModel.setMoney(money);
+        orderModel = requestIsJson.getJsonToModel(request, claszz);
         orderModel.setCreateTime(createTime);
         orderModel.setUpdateTime(createTime);
         orderModel.setState("1");

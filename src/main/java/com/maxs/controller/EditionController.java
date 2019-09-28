@@ -2,7 +2,9 @@ package com.maxs.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.maxs.common.RequestIsJson;
 import com.maxs.common.ReturnMap;
+import com.maxs.model.ColourModel;
 import com.maxs.model.EditionModel;
 import com.maxs.service.EditionService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,9 @@ import java.util.Map;
 public class EditionController {
 
     ReturnMap returnMap = new ReturnMap();
+    EditionModel editionModel;
+    private Class claszz = EditionModel.class;
+    private RequestIsJson<EditionModel> requestIsJson = new RequestIsJson<>();
     /**
      * 版本查询-----根据商品id
      * @param request
@@ -27,9 +32,10 @@ public class EditionController {
      */
     @RequestMapping(value = "/getEdition",method = RequestMethod.POST)
     public String getEdition(HttpServletRequest request, HttpServletResponse response){
-        String goodsId = request.getParameter("goodId");
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
         EditionService editionService = new EditionService();
-        List<Map> list = editionService.getEdition(goodsId);
+        editionModel = requestIsJson.getJsonToModel(request, claszz);
+        List<Map> list = editionService.getEdition(editionModel.getGoodId());
         return returnMap.getGetReMap(list);
     }
 
@@ -41,13 +47,10 @@ public class EditionController {
      */
     @RequestMapping(value = "/updateEdition",method = RequestMethod.POST)
     public String updateEdition(HttpServletRequest request,HttpServletResponse response){
-        String editionId = request.getParameter("editionId");
-
-        String newEditionName = request.getParameter("newEditionName");
-        EditionModel editionModel = new EditionModel();
-        editionModel.setEditionId(editionId);
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
+        editionModel = requestIsJson.getJsonToModel(request, claszz);
         EditionService editionService = new EditionService();
-        int i = editionService.updateEditionName(editionModel,newEditionName);
+        int i = editionService.updateEditionName(editionModel);
         return returnMap.getUpdateReMap(i);
     }
 
@@ -59,10 +62,8 @@ public class EditionController {
      */
     @RequestMapping(value = "/delEdition",method = RequestMethod.POST)
     public String delEdition(HttpServletRequest request,HttpServletResponse response){
-        String editionId = request.getParameter("editionId");
-        EditionModel editionModel = new EditionModel();
-
-        editionModel.setEditionId(editionId);
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
+        editionModel = requestIsJson.getJsonToModel(request, claszz);
         EditionService editionService = new EditionService();
         int i = editionService.delEdition(editionModel);
         return returnMap.getdelReMap(i);
@@ -77,11 +78,8 @@ public class EditionController {
 
     @RequestMapping(value = "/addEdition",method = RequestMethod.POST)
     public String addEdition(HttpServletRequest request,HttpServletResponse response){
-        String goodsId = request.getParameter("goodId");
-        String editionName = request.getParameter("editionName");
-        EditionModel editionModel = new EditionModel();
-        editionModel.setGoodId(goodsId);
-        editionModel.setEditionName(editionName);
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
+        editionModel = requestIsJson.getJsonToModel(request, claszz);
         EditionService editionService = new EditionService();
         int i = editionService.addEdition(editionModel);
         return returnMap.getaddReMap(i);
