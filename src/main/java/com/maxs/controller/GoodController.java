@@ -1,10 +1,9 @@
 package com.maxs.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.maxs.model.GoodModel;
 import com.maxs.service.GoodService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -41,10 +40,29 @@ public class GoodController {
      * @Author: WuGuo
      * @Date: 2019/9/26 12:43
      */
-    @RequestMapping("/get")
+    @RequestMapping(path = "/get")
+    @ResponseBody
+    @PostMapping
     public List<Map> getName(HttpServletRequest request) {
+        System.out.println(request.getParameter("goodID"));
         List<Map> list = goodService.getGood(request.getParameter("goodID"));
         return list;
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    @PostMapping
+    public String getByJSON(@RequestBody JSONObject jsonParam){
+        // 直接将json信息打印出来
+        System.out.println(jsonParam.toJSONString());
+
+        // 将获取的json数据封装一层，然后在给返回
+        JSONObject result = new JSONObject();
+        result.put("msg", "ok");
+        result.put("method", "json");
+        result.put("data", jsonParam);
+
+        return result.toJSONString();
     }
 
     /**

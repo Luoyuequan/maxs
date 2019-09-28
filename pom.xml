@@ -39,10 +39,18 @@
             <scope>test</scope>
         </dependency>
 
+<!--        热部署-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+
+<!--        JSON-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.4</version>
         </dependency>
     </dependencies>
 
