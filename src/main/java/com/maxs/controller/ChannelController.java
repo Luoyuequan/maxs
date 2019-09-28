@@ -2,12 +2,11 @@ package com.maxs.controller;
 
 import com.maxs.model.ChannelModel;
 import com.maxs.service.ChannelService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,10 +44,8 @@ public class ChannelController {
      * @Date: 2019/9/26 13:50
      */
     @RequestMapping("/get")
-    public List<Map> getChannel(HttpServletRequest request) {
-        String channelID = request.getParameter("channelID");
-        List<Map> mapList = channelService.getChannel(channelID);
-        return mapList;
+    public List<Map> getChannel(@RequestBody ChannelModel channel) {
+        return channelService.getChannel(channel);
     }
 
     /**
@@ -60,10 +57,8 @@ public class ChannelController {
      * @Date: 2019/9/26 13:51
      */
     @RequestMapping("/remove")
-    public Map remove(HttpServletRequest request) {
-        String channelID = request.getParameter("channelID");
-        Map map = channelService.deleteC(channelID);
-        return map;
+    public Map remove(@RequestBody ChannelModel channel) {
+        return channelService.deleteC(channel);
     }
 
     /**
@@ -76,18 +71,8 @@ public class ChannelController {
      */
     @RequestMapping("/save")
     @ResponseBody
-    public Map save(HttpServletRequest request) {
-
-        ChannelModel channelModel = new ChannelModel();
-        channelModel.setChannelName(request.getParameter("channelName"));
-        channelModel.setCreateTime(request.getParameter("createTime"));
-        channelModel.setUpdateTime(request.getParameter("updateTime"));
-        String adminID = request.getParameter("adminID");
-        if (adminID != null && adminID != "") {
-            channelModel.setAdminID(Integer.parseInt(adminID));
-        }
-        Map map = channelService.saveC(channelModel);
-        return map;
+    public Map save(@RequestBody ChannelModel channel) {
+        return  channelService.saveC(channel);
     }
 
     /**
@@ -100,19 +85,7 @@ public class ChannelController {
      */
     @RequestMapping("/update")
     @ResponseBody
-    public Map update(HttpServletRequest request) {
-        ChannelModel channelModel = new ChannelModel();
-        channelModel.setChannelName(request.getParameter("channelName"));
-        channelModel.setUpdateTime(request.getParameter("updateTime"));
-        String adminID = request.getParameter("adminID");
-        if (adminID != null && adminID != "") {
-            channelModel.setAdminID(Integer.parseInt(adminID));
-        }
-        String channelID = request.getParameter("channelID");
-        if (channelID != null && channelID != "") {
-            channelModel.setChannelID(Integer.parseInt(channelID));
-        }
-        Map map = channelService.updateC(channelModel);
-        return map;
+    public Map update(@RequestBody ChannelModel channel) {
+        return channelService.updateC(channel);
     }
 }

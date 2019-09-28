@@ -23,28 +23,19 @@ public class GoodInfoService {
     }
 
     //查
-    public List<Map> getGoodInfo(String str) {
-        List<Map> mapList = new ArrayList<>();
-        if (str != null && str != "") {
-            mapList = goodInfoDao.getGoodInfoByID(Integer.parseInt(str));
-            int i = (mapList != null) && (mapList.size() > 0) ? 1 : 0;
-            mapList.add(result(i));
-        } else {
-            Map map=new HashMap();
-            map.put("status", 0);
-            map.put("mag", "输入为空！");
-            mapList.add(map);
-        }
+    public List<Map> getGoodInfo(GoodInfoModel goodInfo) {
+        List<Map> mapList = goodInfoDao.getGoodInfoByID(goodInfo.getInfoID());
+        int i = (mapList != null) && (mapList.size() > 0) ? 1 : 0;
+        mapList.add(result(i));
+
         return mapList;
     }
 
     //删
-    public Map deleteC(String str) {
+    public Map deleteC(GoodInfoModel goodInfo) {
 //        = (goodInfoID!=0)?1:0;
-        int i = 0;
-        if (str != null && str != "") {
-            i = goodInfoDao.removeGoodInfoByID(Integer.parseInt(str));
-        }
+        int  i = goodInfoDao.removeGoodInfoByID(goodInfo.getInfoID());
+
         return result(i);
     }
 
