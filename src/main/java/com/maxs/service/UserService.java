@@ -45,7 +45,6 @@ public class UserService {
         List<Map> list = userDaoImpl.listBaseInfo(userModel);
         Map<String, Object> data = new HashMap<>();
         if (list.size()>0) {
-            System.out.println(list);
             if (!userModel.getPw().equals(list.get(0).get("pw"))){
                 data.put("status", 0);
                 data.put("msg", "登录失败");
