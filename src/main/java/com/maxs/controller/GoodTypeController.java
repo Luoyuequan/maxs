@@ -1,5 +1,6 @@
 package com.maxs.controller;
 
+import com.maxs.common.RequestIsJson;
 import com.maxs.model.GoodTypeModel;
 import com.maxs.service.GoodTypeService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/goodType")
 public class GoodTypeController {
+    private GoodTypeService goodTypeService = new GoodTypeService();
+    private GoodTypeModel goodTypeModel;
+    private Class claszz = GoodTypeModel.class;
+    private RequestIsJson<GoodTypeModel> requestIsJson = new RequestIsJson<>();
     /**
      * 所有商品分类信息
      *
@@ -23,7 +28,6 @@ public class GoodTypeController {
     @RequestMapping(value = "/listAllInfo", method = RequestMethod.POST)
     public List<Map> listAllInfo(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        GoodTypeService goodTypeService = new GoodTypeService();
         return goodTypeService.listAllInfo();
     }
 
@@ -36,16 +40,9 @@ public class GoodTypeController {
     @RequestMapping(value = "/addGoodType", method = RequestMethod.POST)
     public List<Map> addGoodType(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        String typeName = request.getParameter("typeName") == null ? "" : request.getParameter("typeName");
-        int parentId = request.getParameter("parentId") == null ? 0 : Integer.parseInt(request.getParameter("parentId"));
-        int adminId = request.getParameter("admintId") == null ? 0 : Integer.parseInt(request.getParameter("adminId"));
         String createTime = String.valueOf(System.currentTimeMillis());
-        GoodTypeModel goodTypeModel = new GoodTypeModel();
-        goodTypeModel.setTypeName(typeName);
-        goodTypeModel.setParentId(parentId);
-        goodTypeModel.setAdminId(adminId);
+        goodTypeModel = requestIsJson.getJsonToModel(request,claszz);
         goodTypeModel.setCreateTime(createTime);
-        GoodTypeService goodTypeService = new GoodTypeService();
         return goodTypeService.addGoodType(goodTypeModel);
     }
 
@@ -59,12 +56,9 @@ public class GoodTypeController {
     @RequestMapping(value = "/deleteGoodType", method = RequestMethod.POST)
     public List<Map> deleteGoodType(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        int goodTypeId = request.getParameter("goodTypeId") == null ? 0 : Integer.parseInt(request.getParameter("goodTypeId"));
         int status = 2;
-        GoodTypeModel goodTypeModel = new GoodTypeModel();
-        goodTypeModel.setGoodTypeId(goodTypeId);
+        goodTypeModel = requestIsJson.getJsonToModel(request,claszz);
         goodTypeModel.setStatus(status);
-        GoodTypeService goodTypeService = new GoodTypeService();
         return goodTypeService.deleteGoodType(goodTypeModel);
     }
 
@@ -77,18 +71,9 @@ public class GoodTypeController {
     @RequestMapping(value = "/updateGoodTypeInfo", method = RequestMethod.POST)
     public List<Map> updateGoodTypeInfo(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        int goodTypeId = request.getParameter("goodTypeId") == null ? 0 : Integer.parseInt(request.getParameter("goodTypeId"));
-        String typeName = request.getParameter("typeName") == null ? "" : request.getParameter("typeName");
-        int parentId = request.getParameter("parentId") == null ? 0 : Integer.parseInt(request.getParameter("parentId"));
-        int adminId = request.getParameter("admintId") == null ? 0 : Integer.parseInt(request.getParameter("adminId"));
         String updateTime = String.valueOf(System.currentTimeMillis());
-        GoodTypeModel goodTypeModel = new GoodTypeModel();
-        goodTypeModel.setGoodTypeId(goodTypeId);
-        goodTypeModel.setTypeName(typeName);
-        goodTypeModel.setParentId(parentId);
-        goodTypeModel.setAdminId(adminId);
+        goodTypeModel = requestIsJson.getJsonToModel(request,claszz);
         goodTypeModel.setUpdateTime(updateTime);
-        GoodTypeService goodTypeService = new GoodTypeService();
         return goodTypeService.updateGoodTypeInfo(goodTypeModel);
     }
 }

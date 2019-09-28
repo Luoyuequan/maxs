@@ -1,7 +1,5 @@
 package com.maxs.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.maxs.common.JDBC;
 import com.maxs.common.RequestIsJson;
 import com.maxs.model.UserModel;
 import com.maxs.service.UserService;
@@ -10,9 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +37,6 @@ public class UserController {
         System.out.println(userModel.getUserAccount());
         System.out.println(userModel.getPw());
         return userService.login(userModel);
-
     }
 
     /**
@@ -160,7 +154,6 @@ public class UserController {
         int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
         userModel = requestIsJson.getJsonToModel(request, claszz);
-
         return userService.changePw(userModel);
     }
 }
