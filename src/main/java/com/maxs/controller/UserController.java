@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -26,17 +27,17 @@ public class UserController {
      * @param request 请求
      * @return 登录信息
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST,produces = "application/json")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
 //    @PostMapping("/login")
-    public Map login(@RequestBody UserModel userModel, HttpServletRequest request, HttpServletResponse response) {
+    public Map login(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
-        response.setHeader("Access-Control-Allow-Origin", "*");
+//        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("application/json");
         System.out.println(request.getContentType());
         System.out.println(request.getHeader("Origin"));
         System.out.println(request.getHeader("Accept"));
         String lastLoginTime = String.valueOf(System.currentTimeMillis());
-//        userModel = requestIsJson.getJsonToModel(request, claszz);
+        userModel = requestIsJson.getJsonToModel(request, claszz);
         userModel.setLastLoginTime(lastLoginTime);
         System.out.println(userModel.getUserAccount());
         System.out.println(userModel.getPw());

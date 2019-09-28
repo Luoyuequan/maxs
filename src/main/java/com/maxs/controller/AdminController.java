@@ -3,6 +3,7 @@ package com.maxs.controller;
 import com.maxs.common.RequestIsJson;
 import com.maxs.model.AdminModel;
 import com.maxs.service.AdminService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
