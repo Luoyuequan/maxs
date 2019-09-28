@@ -2,12 +2,8 @@ package com.maxs.controller;
 
 import com.maxs.model.GoodInfoModel;
 import com.maxs.service.GoodInfoService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +13,7 @@ import java.util.Map;
  * @create: 2019-09-26 13:07
  */
 @RestController
+@ResponseBody
 @RequestMapping("/goodInfo")
 public class GoodInfoController {
     private GoodInfoService goodInfoService = new GoodInfoService();
@@ -30,7 +27,6 @@ public class GoodInfoController {
      * @Date: 2019/9/26 13:23
      */
     @RequestMapping("/list")
-    @PostMapping
     public List<Map> listGoodInfo() {
         List<Map> list = goodInfoService.listGoodInfo();
         return list;
@@ -45,10 +41,9 @@ public class GoodInfoController {
      * @Date: 2019/9/26 12:43
      */
     @RequestMapping("/get")
-    public List<Map> getGoodInfo(HttpServletRequest request) {
-        String goodInfoID = request.getParameter("goodInfoID");
-        List<Map> list = goodInfoService.getGoodInfo(goodInfoID);
-        return list;
+    @PostMapping
+    public List<Map> getGoodInfo(@RequestBody GoodInfoModel goodInfo) {
+        return goodInfoService.getGoodInfo(goodInfo);
     }
 
     /**
@@ -60,9 +55,9 @@ public class GoodInfoController {
      * @Date: 2019/9/26 12:44
      */
     @RequestMapping("/remove")
-    public Map remove(HttpServletRequest request) {
-        String goodInfoID = request.getParameter("goodInfoID");
-        return goodInfoService.deleteC(goodInfoID);
+    @PostMapping
+    public Map remove(@RequestBody GoodInfoModel goodInfo) {
+        return goodInfoService.deleteC(goodInfo);
     }
 
     /**
@@ -74,10 +69,9 @@ public class GoodInfoController {
      * @Date: 2019/9/26 12:44
      */
     @RequestMapping("/save")
-    @ResponseBody
-    public Map save(HttpServletRequest request) {
-        GoodInfoModel goodInfoModel = putInGoodInfModel(request);
-        return goodInfoService.saveC(goodInfoModel);
+    @PostMapping
+    public Map save(@RequestBody GoodInfoModel goodInfo) {
+        return goodInfoService.saveC(goodInfo);
     }
 
     /**
@@ -89,43 +83,41 @@ public class GoodInfoController {
      * @Date: 2019/9/26 12:46
      */
     @RequestMapping("/update")
-    @ResponseBody
-    public Map update(HttpServletRequest request) {
-        GoodInfoModel goodInfoModel = putInGoodInfModel(request);
-        goodInfoModel.setInfoID(strTOInt(request.getParameter("infoID")));
-        return goodInfoService.updateC(goodInfoModel);
+    @PostMapping
+    public Map update(@RequestBody GoodInfoModel goodInfo) {
+        return goodInfoService.updateC(goodInfo);
     }
 
-    /**
-     * string转int，为null时，返回0
-     *
-     * @param str
-     * @return
-     */
-    private int strTOInt(String str) {
-        int i = 0;
-        if (str != null && str != "") {
-            i = Integer.parseInt(str);
-        }
-        return i;
-    }
-
-    /**
-     * 〈将获取到的值放入GoodModel中〉
-     *
-     * @Param: [request]
-     * @Return: com.maxs.model.GoodModel
-     * @Author: WuGuo
-     * @Date: 2019/9/26 12:45
-     */
-    private GoodInfoModel putInGoodInfModel(HttpServletRequest request) {
-        GoodInfoModel goodInfoModel = new GoodInfoModel();
-        goodInfoModel.setGoodID(strTOInt(request.getParameter("goodID")));
-        goodInfoModel.setBrand(request.getParameter("brand"));
-        goodInfoModel.setWeight(request.getParameter("weight"));
-        goodInfoModel.setOrigin(request.getParameter("origin"));
-        goodInfoModel.setInterfacePhone(request.getParameter("interfacePhone"));
-        return goodInfoModel;
-    }
+//    /**
+//     * string转int，为null时，返回0
+//     *
+//     * @param str
+//     * @return
+//     */
+//    private int strTOInt(String str) {
+//        int i = 0;
+//        if (str != null && str != "") {
+//            i = Integer.parseInt(str);
+//        }
+//        return i;
+//    }
+//
+//    /**
+//     * 〈将获取到的值放入GoodModel中〉
+//     *
+//     * @Param: [request]
+//     * @Return: com.maxs.model.GoodModel
+//     * @Author: WuGuo
+//     * @Date: 2019/9/26 12:45
+//     */
+//    private GoodInfoModel putInGoodInfModel(HttpServletRequest request) {
+//        GoodInfoModel goodInfoModel = new GoodInfoModel();
+//        goodInfoModel.setGoodID(strTOInt(request.getParameter("goodID")));
+//        goodInfoModel.setBrand(request.getParameter("brand"));
+//        goodInfoModel.setWeight(request.getParameter("weight"));
+//        goodInfoModel.setOrigin(request.getParameter("origin"));
+//        goodInfoModel.setInterfacePhone(request.getParameter("interfacePhone"));
+//        return goodInfoModel;
+//    }
 
 }
