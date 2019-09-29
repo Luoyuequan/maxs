@@ -49,6 +49,7 @@ public class UserController {
      *
      * @param request 请求
      * @return 注销信息
+     *
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public Map logout(HttpServletRequest request, HttpServletResponse response) {
