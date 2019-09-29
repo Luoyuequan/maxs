@@ -27,8 +27,8 @@ public class UserController {
      * @param request 请求
      * @return 登录信息
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    @PostMapping("/login")
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/login")
     public Map login(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
 //        response.setHeader("Access-Control-Allow-Origin", "*");
@@ -51,7 +51,8 @@ public class UserController {
      * @param request 请求
      * @return 注销信息
      */
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+//    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping("/logout")
     public Map logout(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
         //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));

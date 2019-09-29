@@ -51,7 +51,7 @@ public class JDBC {
 
         try {
             // 获得连接
-            conn = getConnection();
+            Connection conn = getConnection();
             conn.setAutoCommit(false);
             // 调用SQL
 //            insert 获取返回值 Statement.RETURN_GENERATED_KEYS
@@ -96,7 +96,7 @@ public class JDBC {
     private static void executeQueryRS(String sql, Object[]... params) {
         try {
             // 获得连接
-            conn = getConnection();
+            Connection conn = getConnection();
             // 调用SQL
             pst = conn.prepareStatement(sql);
 
@@ -125,7 +125,7 @@ public class JDBC {
         Object object = null;
         try {
             // 获得连接
-            conn = getConnection();
+            Connection conn = getConnection();
             // 调用SQL
             pst = conn.prepareStatement(sql);
             // 参数赋值
