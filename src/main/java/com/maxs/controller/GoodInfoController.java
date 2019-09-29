@@ -89,36 +89,4 @@ public class GoodInfoController {
         return goodInfoService.updateC(goodInfo);
     }
 
-//    /**
-//     * string转int，为null时，返回0
-//     *
-//     * @param str
-//     * @return
-//     */
-//    private int strTOInt(String str) {
-//        int i = 0;
-//        if (str != null && str != "") {
-//            i = Integer.parseInt(str);
-//        }
-//        return i;
-//    }
-//
-//    /**
-//     * 〈将获取到的值放入GoodModel中〉
-//     *
-//     * @Param: [request]
-//     * @Return: com.maxs.model.GoodModel
-//     * @Author: WuGuo
-//     * @Date: 2019/9/26 12:45
-//     */
-//    private GoodInfoModel putInGoodInfModel(HttpServletRequest request) {
-//        GoodInfoModel goodInfoModel = new GoodInfoModel();
-//        goodInfoModel.setGoodID(strTOInt(request.getParameter("goodID")));
-//        goodInfoModel.setBrand(request.getParameter("brand"));
-//        goodInfoModel.setWeight(request.getParameter("weight"));
-//        goodInfoModel.setOrigin(request.getParameter("origin"));
-//        goodInfoModel.setInterfacePhone(request.getParameter("interfacePhone"));
-//        return goodInfoModel;
-//    }
-
 }
