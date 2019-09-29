@@ -4,16 +4,24 @@ import com.maxs.dao.IUserDao;
 import com.maxs.dao.impl.UserDaoImpl;
 import com.maxs.model.UserModel;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserService {
-    private IUserDao userDaoImpl;
+    private IUserDao userDaoImpl = new UserDaoImpl();
+    private HttpSession session;
 
     public UserService() {
-        this.userDaoImpl = new UserDaoImpl();
+
+    }
+
+    public UserService(HttpServletRequest request) {
+        session = request.getSession(true);
+        session.setMaxInactiveInterval(600);
     }
 
     public List<Map> listBaseInfo(UserModel userModel) {
@@ -58,6 +66,7 @@ public class UserService {
                 data.put("userId", list.get(0).get("userId"));
                 data.put("status", 1);
                 data.put("msg", "登录成功");
+                session.setAttribute("userId", list.get(0).get("userId"));
             }
         } else {
             data.put("status", 0);
@@ -80,6 +89,9 @@ public class UserService {
     }
 
     public Map logout() {
+        if (session.getAttribute("userId") != null) {
+            session.invalidate();
+        }
         Map<String, Object> data = new HashMap<>();
         data.put("status", 1);
         data.put("msg", "注销成功");

@@ -41,6 +41,7 @@ public class UserController {
         userModel.setLastLoginTime(lastLoginTime);
         System.out.println(userModel.getUserAccount());
         System.out.println(userModel.getPw());
+        this.userService = new UserService(request);
         return userService.login(userModel);
     }
 
@@ -49,12 +50,12 @@ public class UserController {
      *
      * @param request 请求
      * @return 注销信息
-     *
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public Map logout(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
         //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        this.userService = new UserService(request);
         return userService.logout();
     }
 
@@ -79,7 +80,7 @@ public class UserController {
      * @return 更多信息集
      */
     @RequestMapping(value = "/moreInfo", method = RequestMethod.POST)
-    public List<Map> moreInfo( HttpServletRequest request, HttpServletResponse response) {
+    public List<Map> moreInfo(HttpServletRequest request, HttpServletResponse response) {
         //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         userModel = requestIsJson.getJsonToModel(request, claszz);
