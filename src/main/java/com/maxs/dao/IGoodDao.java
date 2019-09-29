@@ -10,15 +10,15 @@ public interface IGoodDao {
     List<Map> listGoodAll();
 
     //根据ID查询
-    List<Map> getGoodByID(int channelID);
+    List<Map> getGoodByID(int goodID);
 
     //根据ID删除
-    int removeGoodByID(int channelID);
+    int removeGoodByID(GoodModel goodModel);
 
     //添加
-    int saveGood(GoodModel channel);
+    int saveGood(GoodModel goodModel);
 
     //修改
-    int updateGoodByID(GoodModel channel);
+    int updateGoodByID(GoodModel goodModel);
 }
 

@@ -87,9 +87,9 @@ public class GoodDaoImpl implements IGoodDao {
      * @Date: 2019/9/26 12:49
      */
     @Override
-    public int removeGoodByID(int goodID) {
-        String sql = "UPDATE good SET `status` = 0 WHERE good_id = ?";
-        return JDBC.executeUpdate(sql, new Object[]{goodID});
+    public int removeGoodByID(GoodModel good) {
+        String sql = "UPDATE good SET update_time=?,`status` = 0 WHERE good_id = ?";
+        return JDBC.executeUpdate(sql, new Object[]{good.getUpdateTime(),good.getGoodID()});
     }
 
     /**
@@ -123,11 +123,11 @@ public class GoodDaoImpl implements IGoodDao {
     @Override
     public int updateGoodByID(GoodModel good) {
         String sql = "UPDATE good SET good_name=?,type_id=?,channel_id=?," +
-                "price=?,admin_id=?,create_time=?,update_time=?," +
+                "price=?,admin_id=?,update_time=?," +
                 "hot=?,banner=? WHERE good_id = ?";
         Object[] object = new Object[]{good.getGoodName(), good.getTypeID(),
                 good.getChannelID(), good.getPrice(), good.getAdminID(),
-                good.getCreateTime(), good.getUpdateTime(),
+                 good.getUpdateTime(),
                 good.getHot(), good.getBanner(), good.getGoodID()};
         return JDBC.executeUpdate(sql, object);
     }

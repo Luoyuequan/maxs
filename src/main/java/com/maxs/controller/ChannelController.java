@@ -61,6 +61,8 @@ public class ChannelController {
      */
     @RequestMapping("/remove")
     public Map remove(@RequestBody ChannelModel channel) {
+        long l = System.currentTimeMillis();
+        channel.setUpdateTime(Long.toString(l));
         return channelService.deleteC(channel);
     }
 
@@ -75,6 +77,8 @@ public class ChannelController {
     @RequestMapping("/save")
     @ResponseBody
     public Map save(@RequestBody ChannelModel channel) {
+        long l = System.currentTimeMillis();
+        channel.setUpdateTime(Long.toString(l));
         return channelService.saveC(channel);
     }
 
@@ -89,6 +93,9 @@ public class ChannelController {
     @RequestMapping("/update")
     @ResponseBody
     public Map update(@RequestBody ChannelModel channel) {
+        long l = System.currentTimeMillis();
+        channel.setUpdateTime(Long.toString(l));
+        channel.setCreateTime(Long.toString(l));
         return channelService.updateC(channel);
     }
 }
