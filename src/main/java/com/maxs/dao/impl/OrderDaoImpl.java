@@ -62,12 +62,14 @@ public class OrderDaoImpl implements IOrderDao {
                 "\toi.STATUS `status`,\n" +
                 "\tco.colour_name colourName,\n" +
                 "\tco.colour_url colourUrl ,\n" +
-                "\ted.edition_name editionName\n" +
+                "\ted.edition_name editionName,\n" +
+                "\tgo.good_name goodName\n" +
                 "FROM\n" +
                 "\t`order` o\n" +
                 "\tLEFT JOIN order_info oi ON o.order_id = oi.order_id\n" +
                 "\tLEFT JOIN colour co ON oi.colour_id = co.colour_id \n" +
                 "\tLEFT JOIN edition ed on oi.edition_id = ed.edition_id\n" +
+                "\tLEFT JOIN good go on oi.good_id = go.good_id\n" +
                 "WHERE\n" +
                 "\to.order_id = ?";
         Object[] objects = new Object[]{orderModel.getOrderId()};

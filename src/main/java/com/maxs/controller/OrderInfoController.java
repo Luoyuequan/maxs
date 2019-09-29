@@ -39,6 +39,12 @@ public class OrderInfoController {
         return returnMap.getGetReMap(list);
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("/addOrderInfo")
     public String addOrderInfo(HttpServletRequest request,HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
