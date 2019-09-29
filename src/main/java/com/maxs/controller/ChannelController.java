@@ -17,6 +17,7 @@ import java.util.Map;
 
 @CrossOrigin
 @RestController
+@ResponseBody
 @RequestMapping("/channel")
 public class ChannelController {
     private ChannelService channelService = new ChannelService();
