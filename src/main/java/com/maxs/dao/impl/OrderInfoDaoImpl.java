@@ -11,7 +11,7 @@ public class OrderInfoDaoImpl implements IOrderInfoDao {
     @Override
     public List<Map> getOrderInfo(OrderInfoModel orderInfoModel) {
 
-        String sql = "select * from order_info where order_id = ?";
+        String sql = "select order_info_id orderInfoId,order_id orderId,good_id goodId,price,user_id userId,num,colour_id colourId,edition_id editionId,create_time createTime,update_time updateTime,status  from order_info where order_id = ?";
         Object[] objects = new Object[]{orderInfoModel.getOrderId()};
         return JDBC.excuteQuery(sql,objects);
     }
