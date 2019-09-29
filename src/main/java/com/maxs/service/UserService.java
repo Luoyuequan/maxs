@@ -29,28 +29,33 @@ public class UserService {
     }
 
     public Map registerUser(UserModel userModel) {
-        int insertResult = userDaoImpl.insertUserInfo(userModel);
+        List<Map> list = listBaseInfo(userModel);
         Map<String, Object> data = new HashMap<>();
-        if (insertResult > 0) {
-            data.put("status", 1);
-            data.put("msg", "新增成功");
-        } else {
+        if (list.size() > 0) {
             data.put("status", 0);
-            data.put("msg", "新增失败");
+            data.put("msg", "用户已存在");
+        } else {
+            int insertResult = userDaoImpl.insertUserInfo(userModel);
+            if (insertResult > 0) {
+                data.put("status", 1);
+                data.put("msg", "新增成功");
+            } else {
+                data.put("status", 0);
+                data.put("msg", "新增失败");
+            }
         }
         return data;
     }
 
     public Map login(UserModel userModel) {
-        List<Map> list = userDaoImpl.listBaseInfo(userModel);
+        List<Map> list = listBaseInfo(userModel);
         Map<String, Object> data = new HashMap<>();
-        if (list.size()>0) {
-            if (!userModel.getPw().equals(list.get(0).get("pw"))){
+        if (list.size() > 0) {
+            if (!userModel.getPw().equals(list.get(0).get("pw"))) {
                 data.put("status", 0);
                 data.put("msg", "登录失败");
-            }
-            else {
-                data.put("userId",list.get(0).get("userId"));
+            } else {
+                data.put("userId", list.get(0).get("userId"));
                 data.put("status", 1);
                 data.put("msg", "登录成功");
             }
@@ -76,7 +81,7 @@ public class UserService {
 
     public Map logout() {
         Map<String, Object> data = new HashMap<>();
-        data.put("status",1);
+        data.put("status", 1);
         data.put("msg", "注销成功");
         return data;
     }
@@ -102,7 +107,8 @@ public class UserService {
             data.put("msg", "修改成功");
         } else {
             data.put("status", 0);
-            data.put("msg", "修改失败");;
+            data.put("msg", "修改失败");
+            ;
         }
         return data;
     }
