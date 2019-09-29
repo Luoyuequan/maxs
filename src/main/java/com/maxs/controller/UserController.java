@@ -32,7 +32,7 @@ public class UserController {
     public Map login(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
 //        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setContentType("application/json");
+//        response.setContentType("application/json");
         System.out.println(request.getContentType());
         System.out.println(request.getHeader("Origin"));
         System.out.println(request.getHeader("Accept"));
@@ -136,17 +136,12 @@ public class UserController {
     /**
      * 更改用户信息
      *
-     * @param request 请求
      * @return 更改结果信息
      */
-    @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
-    public Map updateUserInfo(HttpServletRequest request, HttpServletResponse response) {
-        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
-        int sex = request.getParameter("sex") == null ? 0 : Integer.parseInt(request.getParameter("sex"));
-        int userType = request.getParameter("userType") == null ? 1 : Integer.parseInt(request.getParameter("userType"));
-        int qq = request.getParameter("qq") == null ? 0 : Integer.parseInt(request.getParameter("qq"));
+    @PostMapping(value = "/updateUserInfo")
+    public Map updateUserInfo(HttpServletRequest request) {
         userModel = requestIsJson.getJsonToModel(request, claszz);
+        System.out.println(userModel.getRealName());
         return userService.updateUserInfo(userModel);
     }
 
@@ -158,7 +153,6 @@ public class UserController {
      */
     @RequestMapping(value = "/changePw", method = RequestMethod.POST)
     public Map changePw(HttpServletRequest request, HttpServletResponse response) {
-        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
         userModel = requestIsJson.getJsonToModel(request, claszz);

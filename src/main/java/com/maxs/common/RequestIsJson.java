@@ -3,24 +3,37 @@ package com.maxs.common;
 import com.alibaba.fastjson.JSON;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RequestIsJson<T> {
-    public T getJsonToModel(HttpServletRequest request,Class claszz) {
-        StringBuilder sb = new StringBuilder();
+    public T getJsonToModel(HttpServletRequest request, Class claszz) {
+        StringBuilder buffer = new StringBuilder();
+        Reader reader = null;
         try {
-            InputStream input = request.getInputStream();
-            int n;
-            while ((n = input.read()) != -1) {
-                sb.append((char) n);
+            reader = new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8);
+            int n = 0;
+            while ((n = reader.read()) != -1) {
+                buffer.append((char) n);
             }
-            if (sb.length() == 0){
-                sb.append("{}");
+            if (buffer.length() == 0) {
+                return (T) claszz.newInstance();
             }
-        } catch (IOException e) {
+        } catch (IOException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return (T) JSON.parseObject(sb.toString(), claszz);
+
+        return (T) JSON.parseObject(buffer.toString(), claszz);
     }
 }
