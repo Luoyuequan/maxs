@@ -23,8 +23,20 @@ public class GoodInfoDaoImpl implements IGoodInfoDao {
      */
     @Override
     public List<Map> listGoodInfoAll() {
-        String sql = "SELECT info_id as infoID,good_id as goodID,brand,weight," +
-                "origin,interface_phone as interfacePhone,`status` FROM good_info WHERE `status`=1";
+        String sql = "\tSELECT\n" +
+                "\tgi.info_id AS infoID,\n" +
+                "\tgi.good_id AS goodID,\n" +
+                "\tg.good_name AS goodName,\n" +
+                "\tgi.brand,\n" +
+                "\tgi.weight,\n" +
+                "\tgi.origin,\n" +
+                "\tgi.interface_phone AS interfacePhone,\n" +
+                "\tgi.`status` \n" +
+                "FROM\n" +
+                "\tgood_info gi\n" +
+                "\tLEFT JOIN good g ON gi.good_id = g.good_id \n" +
+                "WHERE\n" +
+                "\tgi.`status` =1";
         return JDBC.excuteQuery(sql);
     }
 
@@ -38,8 +50,21 @@ public class GoodInfoDaoImpl implements IGoodInfoDao {
      */
     @Override
     public List<Map> getGoodInfoByID(int goodInfoID) {
-        String sql = "SELECT info_id as infoID, good_id as goodID,brand,weight,origin," +
-                "interface_phone as interfacePhone,`status` FROM good_info WHERE info_id=? AND `status`=1";
+        String sql = "SELECT\n" +
+                "\tgi.info_id AS infoID,\n" +
+                "\tgi.good_id AS goodID,\n" +
+                "\tg.good_name AS goodName,\n" +
+                "\tgi.brand,\n" +
+                "\tgi.weight,\n" +
+                "\tgi.origin,\n" +
+                "\tgi.interface_phone AS interfacePhone,\n" +
+                "\tgi.`status` \n" +
+                "FROM\n" +
+                "\tgood_info gi\n" +
+                "\tLEFT JOIN good g ON gi.good_id = g.good_id \n" +
+                "WHERE\n" +
+                "\tgi.`status` =1 AND\n" +
+                "\tgi.info_id=?";
         return JDBC.excuteQuery(sql, new Object[]{goodInfoID});
     }
 

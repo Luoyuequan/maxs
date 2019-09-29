@@ -20,9 +20,12 @@ public class GoodDaoImpl implements IGoodDao {
         String sql = "SELECT\n" +
                 "\tg.good_id AS goodID,\n" +
                 "\tg.good_name AS goodName,\n" +
+                "\tg.type_id AS typeID,\n" +
                 "\tgt.type_name AS typeName,\n" +
+                "\tg.channel_id AS channelID,\n" +
                 "\tc.channel_name AS channelName,\n" +
                 "\tg.price,\n" +
+                "\tg.admin_id AS adminID,\n" +
                 "\ta.admin_name AS adminName,\n" +
                 "\tg.create_time AS createTime,\n" +
                 "\tg.update_time AS updateTime,\n" +
@@ -52,9 +55,12 @@ public class GoodDaoImpl implements IGoodDao {
         String sql = "SELECT\n" +
                 "\tg.good_id AS goodID,\n" +
                 "\tg.good_name AS goodName,\n" +
+                "\tg.type_id AS typeID,\n" +
                 "\tgt.type_name AS typeName,\n" +
+                "\tg.channel_id AS channelID,\n" +
                 "\tc.channel_name AS channelName,\n" +
                 "\tg.price,\n" +
+                "\tg.admin_id AS adminID,\n" +
                 "\ta.admin_name AS adminName,\n" +
                 "\tg.create_time AS createTime,\n" +
                 "\tg.update_time AS updateTime,\n" +
