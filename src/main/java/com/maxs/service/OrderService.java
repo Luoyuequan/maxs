@@ -29,4 +29,9 @@ public class OrderService {
     public int addOrder(OrderModel orderModel) {
         return iOrderDao.addOrder(orderModel);
     }
+
+    public List<Map> getOrderInfo(OrderModel orderModel) {
+
+        return iOrderDao.getOrderInfo(orderModel);
+    }
 }

@@ -44,4 +44,33 @@ public class OrderDaoImpl implements IOrderDao {
                 orderModel.getUpdateTime(),orderModel.getState(),orderModel.getStatus()};
         return JDBC.executeUpdate(sql,objects);
     }
+
+    @Override
+    public List<Map> getOrderInfo(OrderModel orderModel) {
+        String sql ="SELECT\n" +
+                "\to.user_id userId,\n" +
+                "\to.money,\n" +
+                "\to.create_time createTime,\n" +
+                "\to.update_time updateTime,\n" +
+                "\to.state,\n" +
+                "\toi.order_info_id orderInfoId,\n" +
+                "\toi.good_id goodId,\n" +
+                "\toi.price,\n" +
+                "\toi.num,\n" +
+                "\toi.colour_id colourId,\n" +
+                "\toi.edition_id editionId,\n" +
+                "\toi.STATUS `status`,\n" +
+                "\tco.colour_name colourName,\n" +
+                "\tco.colour_url colourUrl ,\n" +
+                "\ted.edition_name editionName\n" +
+                "FROM\n" +
+                "\t`order` o\n" +
+                "\tLEFT JOIN order_info oi ON o.order_id = oi.order_id\n" +
+                "\tLEFT JOIN colour co ON oi.colour_id = co.colour_id \n" +
+                "\tLEFT JOIN edition ed on oi.edition_id = ed.edition_id\n" +
+                "WHERE\n" +
+                "\to.order_id = ?";
+        Object[] objects = new Object[]{orderModel.getOrderId()};
+        return JDBC.excuteQuery(sql,objects);
+    }
 }

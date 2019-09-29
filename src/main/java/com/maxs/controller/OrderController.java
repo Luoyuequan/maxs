@@ -34,7 +34,7 @@ public class OrderController {
     @RequestMapping(value = "/getOrder",method = RequestMethod.POST)
     public String getOrder(HttpServletRequest request, HttpServletResponse response){
 
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
+//        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
 
         orderModel = requestIsJson.getJsonToModel(request, claszz);
         List<Map> list = orderService.getOrder(orderModel);
@@ -50,7 +50,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/getOrderByState",method = RequestMethod.POST)
     public String getOrderByState(HttpServletRequest request,HttpServletResponse response){
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
         orderModel = requestIsJson.getJsonToModel(request, claszz);
         List<Map> list = orderService.getOrderByState(orderModel);
 
@@ -65,7 +65,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/updateOrderState",method = RequestMethod.POST)
     public String updateOrderState(HttpServletRequest request,HttpServletResponse response){
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
         orderModel = requestIsJson.getJsonToModel(request, claszz);
         String updateTime= String.valueOf(System.currentTimeMillis());
         orderModel.setUpdateTime(updateTime);
@@ -82,7 +82,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/updateOrderStatus",method = RequestMethod.POST)
     public String updateOrderStatus(HttpServletRequest request,HttpServletResponse response){
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
         orderModel = requestIsJson.getJsonToModel(request, claszz);
         int i = orderService.updateOrderstatus(orderModel);
         return returnMap.getUpdateReMap(i);
@@ -97,7 +97,7 @@ public class OrderController {
     @RequestMapping(value = "/addOrder",method = RequestMethod.POST)
 
     public String addOrder(HttpServletRequest request,HttpServletResponse response){
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//跨域
 
         String createTime= String.valueOf(System.currentTimeMillis());
         orderModel = requestIsJson.getJsonToModel(request, claszz);
@@ -109,5 +109,17 @@ public class OrderController {
         return returnMap.getaddReMap(i);
     }
 
+    /**
+     * 得到订单id订单详情
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/getOrderToInfo")
+    public String getOrderInfo(HttpServletRequest request,HttpServletResponse response){
+        orderModel = requestIsJson.getJsonToModel(request, claszz);
+        List<Map> list = orderService.getOrderInfo(orderModel);
+        return returnMap.getGetReMap(list);
+    }
 
 }

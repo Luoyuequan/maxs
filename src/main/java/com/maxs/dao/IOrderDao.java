@@ -15,4 +15,6 @@ public interface IOrderDao {
     List<Map> getOrderByState(OrderModel orderModel);
 
     int addOrder(OrderModel orderModel);
+
+    List<Map> getOrderInfo(OrderModel orderModel);
 }
