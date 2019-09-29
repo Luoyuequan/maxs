@@ -47,8 +47,8 @@ public class AdminService {
         return adminDaoImpl.listSingleAdminInfo(adminModel);
     }
 
-    public List<Map> listAllInfo() {
-        return adminDaoImpl.listAllAdminInfo();
+    public List<Map> listAllInfo(AdminModel adminModel) {
+        return adminDaoImpl.listAllAdminInfo(adminModel);
     }
 
     public List<Map> addAdmin(AdminModel adminModel) {

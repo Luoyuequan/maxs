@@ -4,16 +4,24 @@ import com.maxs.dao.IUserDao;
 import com.maxs.dao.impl.UserDaoImpl;
 import com.maxs.model.UserModel;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserService {
-    private IUserDao userDaoImpl;
+    private IUserDao userDaoImpl = new UserDaoImpl();
+    private HttpSession session;
 
     public UserService() {
-        this.userDaoImpl = new UserDaoImpl();
+
+    }
+
+    public UserService(HttpServletRequest request) {
+        session = request.getSession(true);
+        session.setMaxInactiveInterval(600);
     }
 
     public List<Map> listBaseInfo(UserModel userModel) {
@@ -29,30 +37,36 @@ public class UserService {
     }
 
     public Map registerUser(UserModel userModel) {
-        int insertResult = userDaoImpl.insertUserInfo(userModel);
+        List<Map> list = listBaseInfo(userModel);
         Map<String, Object> data = new HashMap<>();
-        if (insertResult > 0) {
-            data.put("status", 1);
-            data.put("msg", "新增成功");
-        } else {
+        if (list.size() > 0) {
             data.put("status", 0);
-            data.put("msg", "新增失败");
+            data.put("msg", "用户已存在");
+        } else {
+            int insertResult = userDaoImpl.insertUserInfo(userModel);
+            if (insertResult > 0) {
+                data.put("status", 1);
+                data.put("msg", "新增成功");
+            } else {
+                data.put("status", 0);
+                data.put("msg", "新增失败");
+            }
         }
         return data;
     }
 
     public Map login(UserModel userModel) {
-        List<Map> list = userDaoImpl.listBaseInfo(userModel);
+        List<Map> list = listBaseInfo(userModel);
         Map<String, Object> data = new HashMap<>();
-        if (list.size()>0) {
-            if (!userModel.getPw().equals(list.get(0).get("pw"))){
+        if (list.size() > 0) {
+            if (!userModel.getPw().equals(list.get(0).get("pw"))) {
                 data.put("status", 0);
                 data.put("msg", "登录失败");
-            }
-            else {
-                data.put("userId",list.get(0).get("userId"));
+            } else {
+                data.put("userId", list.get(0).get("userId"));
                 data.put("status", 1);
                 data.put("msg", "登录成功");
+                session.setAttribute("userId", list.get(0).get("userId"));
             }
         } else {
             data.put("status", 0);
@@ -75,8 +89,11 @@ public class UserService {
     }
 
     public Map logout() {
+        if (session.getAttribute("userId") != null) {
+            session.invalidate();
+        }
         Map<String, Object> data = new HashMap<>();
-        data.put("status",1);
+        data.put("status", 1);
         data.put("msg", "注销成功");
         return data;
     }
@@ -102,7 +119,8 @@ public class UserService {
             data.put("msg", "修改成功");
         } else {
             data.put("status", 0);
-            data.put("msg", "修改失败");;
+            data.put("msg", "修改失败");
+            ;
         }
         return data;
     }

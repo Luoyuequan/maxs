@@ -18,8 +18,11 @@ public class AdminDaoImpl implements IAdminDao {
     public List<Map> listSingleAdminInfo(AdminModel adminModel) {
         String sql = "select " +
                 "admin_id as adminId,admin_name as adminName,pw,create_time as createTime,last_login_time as lastLoginTime " +
-                "from admin where `status` = 1 and (admin_id = ? or admin_name = ?)";
-        Object[] param = new Object[]{adminModel.getAdminId(), adminModel.getAdminName()};
+                "from admin where `status` = ? and (admin_id = ? or admin_name = ?)";
+        Object[] param = new Object[]{
+                adminModel.getStatus() == 0 ? 1:adminModel.getStatus(),
+                adminModel.getAdminId(), adminModel.getAdminName()
+        };
         return JDBC.excuteQuery(sql, param);
     }
 
@@ -29,9 +32,14 @@ public class AdminDaoImpl implements IAdminDao {
      * @return 所有管理员信息
      */
     @Override
-    public List<Map> listAllAdminInfo() {
-        String sql = "select admin_id as adminId,admin_name as adminName,pw,create_time as createTime,last_login_time as lastLoginTime from admin where `status` = 1";
-        return JDBC.excuteQuery(sql);
+    public List<Map> listAllAdminInfo(AdminModel adminModel) {
+        String sql = "select " +
+                "admin_id as adminId,admin_name as adminName,pw,create_time as createTime,last_login_time as lastLoginTime " +
+                "from admin where `status` = ?";
+        Object[] param = new Object[]{
+                adminModel.getStatus() == 0 ? 1:adminModel.getStatus(),
+        };
+        return JDBC.excuteQuery(sql,param);
     }
 
     /**

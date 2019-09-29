@@ -73,7 +73,8 @@ public class AdminController {
     @RequestMapping(value = "/listAllInfo", method = RequestMethod.POST)
     public List<Map> listAllInfo(HttpServletRequest request, HttpServletResponse response) {
         //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        return adminService.listAllInfo();
+        adminModel = requestIsJson.getJsonToModel(request, claszz);
+        return adminService.listAllInfo(adminModel);
     }
 
     /**

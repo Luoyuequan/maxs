@@ -19,7 +19,7 @@ public interface IAdminDao {
      *
      * @return 所有管理员信息
      */
-    List<Map> listAllAdminInfo();
+    List<Map> listAllAdminInfo(AdminModel adminModel);
 
     /**
      * 新增管理员数据
