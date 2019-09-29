@@ -29,7 +29,7 @@ public class RequestIsJson<T> {
         StringBuilder buffer = new StringBuilder();
         Reader reader = null;
         try {
-            reader = new InputStreamReader(request.getInputStream());
+            reader = new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8);
             char[] chars = new char[1024];
             int n = 0;
             while ((n = reader.read(chars)) != -1) {
