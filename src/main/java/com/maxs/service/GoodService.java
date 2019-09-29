@@ -15,42 +15,37 @@ import java.util.Map;
  * @create: 2019-09-26 11:30
  */
 public class GoodService {
-    private IGoodDao goodDao=new GoodDaoImpl();
+    private IGoodDao goodDao = new GoodDaoImpl();
+
     //获取所有
-    public List<Map> listGoodAll(){
-        return  goodDao.listGoodAll();
+    public List<Map> listGoodAll() {
+        return goodDao.listGoodAll();
     }
 
     //查
-    public List<Map> getGood(String str){
-        List<Map> mapList = new ArrayList<>();
-        if (str != null && !str.equals("")) {
-            mapList = goodDao.getGoodByID(Integer.parseInt(str));
-            int i = (mapList != null) && (mapList.size() > 0) ? 1 : 0;
-            mapList.add(result(i));
-        } else {
-            Map map=new HashMap();
-            map.put("status", 0);
-            map.put("mag", "输入为空！");
-            mapList.add(map);
-        }
+    public List<Map> getGood(GoodModel goodModel) {
+        List<Map> mapList = goodDao.getGoodByID(goodModel.getGoodID());
+        int i = (mapList != null) && (mapList.size() > 0) ? 1 : 0;
+        mapList.add(result(i));
+
         return mapList;
     }
+
     //删
-    public Map deleteC(String str){
-        int i = 0;
-        if (str != null && str != "") {
-            i = goodDao.removeGoodByID(Integer.parseInt(str));
-        }
+    public Map deleteC(GoodModel goodModel) {
+        int i  = goodDao.removeGoodByID(goodModel.getGoodID());
+
         return result(i);
     }
+
     //增
-    public Map saveC(GoodModel good){
+    public Map saveC(GoodModel good) {
         int i = goodDao.saveGood(good);
         return result(i);
     }
+
     //改
-    public Map updateC(GoodModel good){
+    public Map updateC(GoodModel good) {
         int i = goodDao.updateGoodByID(good);
         return result(i);
     }

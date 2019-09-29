@@ -1,5 +1,6 @@
 package com.maxs.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.maxs.common.RequestIsJson;
 import com.maxs.model.UserModel;
 import com.maxs.service.UserService;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -29,8 +31,11 @@ public class UserController {
 //    @PostMapping("/login")
     public Map login(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("application/json");
         System.out.println(request.getContentType());
+        System.out.println(request.getHeader("Origin"));
+        System.out.println(request.getHeader("Accept"));
         String lastLoginTime = String.valueOf(System.currentTimeMillis());
         userModel = requestIsJson.getJsonToModel(request, claszz);
         userModel.setLastLoginTime(lastLoginTime);

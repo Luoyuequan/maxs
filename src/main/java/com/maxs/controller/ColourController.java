@@ -4,6 +4,7 @@ import com.maxs.common.RequestIsJson;
 import com.maxs.common.ReturnMap;
 import com.maxs.model.ColourModel;
 import com.maxs.service.ColourService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 public class ColourController {
     ReturnMap returnMap = new ReturnMap();

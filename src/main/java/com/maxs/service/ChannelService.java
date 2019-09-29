@@ -4,7 +4,6 @@ import com.maxs.dao.IChannelDao;
 import com.maxs.dao.impl.ChannelDaoImpl;
 import com.maxs.model.ChannelModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,27 +22,16 @@ public class ChannelService {
     }
 
     //查
-    public List<Map> getChannel(String str) {
-        List<Map> mapList = new ArrayList<>();
-        if (str != null && str != "") {
-            mapList = channelDao.getChannelByID(Integer.parseInt(str));
-            int i = (mapList != null) && (mapList.size() > 0) ? 1 : 0;
-            mapList.add(result(i));
-        } else {
-            Map map=new HashMap();
-            map.put("status", 0);
-            map.put("mag", "输入为空！");
-            mapList.add(map);
-        }
+    public List<Map> getChannel(ChannelModel channel) {
+        List<Map> mapList = channelDao.getChannelByID(channel.getChannelID());
+        int i = (mapList != null) && (mapList.size() > 0) ? 1 : 0;
+        mapList.add(result(i));
         return mapList;
     }
 
     //删
-    public Map deleteC(String str) {
-        int i = 0;
-        if (str != null && str != "") {
-            i = channelDao.removeChannelByID(Integer.parseInt(str));
-        }
+    public Map deleteC(ChannelModel channel) {
+        int i = channelDao.removeChannelByID(channel.getChannelID());
         return result(i);
     }
 

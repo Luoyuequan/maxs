@@ -2,11 +2,8 @@ package com.maxs.controller;
 
 import com.maxs.model.GoodModel;
 import com.maxs.service.GoodService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -15,13 +12,16 @@ import java.util.Map;
  * @author: Wu Guo
  * @create: 2019-09-26 11:36
  */
+@CrossOrigin
 @RestController
+@ResponseBody
 @RequestMapping("/good")
 public class GoodController {
     private GoodService goodService = new GoodService();
 
     /**
      * 〈获取所有的good表值〉
+     *
      * @Param: []
      * @Return: java.util.List<java.util.Map>
      * @Author: WuGuo
@@ -41,10 +41,11 @@ public class GoodController {
      * @Author: WuGuo
      * @Date: 2019/9/26 12:43
      */
+//    @RequestMapping(value = "/get",method = RequestMethod.POST,produces = "application/json;UTF-8")
     @RequestMapping("/get")
-    public List<Map> getName(HttpServletRequest request) {
-        List<Map> list = goodService.getGood(request.getParameter("goodID"));
-        return list;
+    @PostMapping
+    public List<Map> getName(@RequestBody GoodModel goodModel) {
+        return goodService.getGood(goodModel);
     }
 
     /**
@@ -56,8 +57,9 @@ public class GoodController {
      * @Date: 2019/9/26 12:44
      */
     @RequestMapping("/remove")
-    public Map remove(HttpServletRequest request) {
-        return goodService.deleteC(request.getParameter("goodID"));
+    @PostMapping
+    public Map remove(@RequestBody GoodModel goodModel) {
+        return goodService.deleteC(goodModel);
     }
 
     /**
@@ -69,9 +71,8 @@ public class GoodController {
      * @Date: 2019/9/26 12:44
      */
     @RequestMapping("/save")
-//    @ResponseBody
-    public Map save(HttpServletRequest request) {
-        GoodModel goodModel = putInGoodModel(request);
+    @PostMapping
+    public Map save(@RequestBody GoodModel goodModel) {
         return goodService.saveC(goodModel);
     }
 
@@ -84,46 +85,58 @@ public class GoodController {
      * @Date: 2019/9/26 12:46
      */
     @RequestMapping("/update")
-//    @ResponseBody
-    public Map update(HttpServletRequest request) {
-        GoodModel goodModel = putInGoodModel(request);
-        goodModel.setGoodID(strTOInt(request.getParameter("goodID")));
+    @PostMapping
+    public Map update(@RequestBody GoodModel goodModel) {
         return goodService.updateC(goodModel);
     }
 
-    /**
-     * string转int，为null时，返回0
-     *
-     * @param str
-     * @return
-     */
-    private int strTOInt(String str) {
-        int i = 0;
-        if (str != null && str != "") {
-            i = Integer.parseInt(str);
-        }
-        return i;
-    }
-
-    /**
-     * 〈将获取到的值放入GoodModel中〉
-     *
-     * @Param: [request]
-     * @Return: com.maxs.model.GoodModel
-     * @Author: WuGuo
-     * @Date: 2019/9/26 12:45
-     */
-    private GoodModel putInGoodModel(HttpServletRequest request) {
-        GoodModel goodModel = new GoodModel();
-        goodModel.setGoodName(request.getParameter("goodName"));
-        goodModel.setTypeID(strTOInt(request.getParameter("typeID")));
-        goodModel.setTypeID(strTOInt(request.getParameter("channelID")));
-        goodModel.setPrice(request.getParameter("price"));
-        goodModel.setAdminID(strTOInt(request.getParameter("adminID")));
-        goodModel.setCreateTime(request.getParameter("createTime"));
-        goodModel.setUpdateTime(request.getParameter("updateTime"));
-        goodModel.setHot(strTOInt(request.getParameter("hot")));
-        goodModel.setHot(strTOInt(request.getParameter("banner")));
-        return goodModel;
-    }
+    //    @RequestMapping("/json/data")
+//
+//    public Map getByJSON(@RequestBody GoodModel jsonParam) {
+//        // 直接将json信息打印出来
+////        JSON.parseObject()
+//        System.out.println(jsonParam.getGoodID());
+//
+//        // 将获取的json数据封装一层，然后在给返回
+//       JSONObject result = new JSONObject();
+//        result.put("msg", "ok");
+//        result.put("method", "json");
+//        result.put("data", jsonParam);
+//        return result;
+//    }
+//    /**
+//     * string转int，为null时，返回0
+//     *
+//     * @param str
+//     * @return
+//     */
+//    private int strTOInt(String str) {
+//        int i = 0;
+//        if (str != null && str != "") {
+//            i = Integer.parseInt(str);
+//        }
+//        return i;
+//    }
+//
+//    /**
+//     * 〈将获取到的值放入GoodModel中〉
+//     *
+//     * @Param: [request]
+//     * @Return: com.maxs.model.GoodModel
+//     * @Author: WuGuo
+//     * @Date: 2019/9/26 12:45
+//     */
+//    private GoodModel putInGoodModel(HttpServletRequest request) {
+//        GoodModel goodModel = new GoodModel();
+//        goodModel.setGoodName(request.getParameter("goodName"));
+//        goodModel.setTypeID(strTOInt(request.getParameter("typeID")));
+//        goodModel.setTypeID(strTOInt(request.getParameter("channelID")));
+//        goodModel.setPrice(request.getParameter("price"));
+//        goodModel.setAdminID(strTOInt(request.getParameter("adminID")));
+//        goodModel.setCreateTime(request.getParameter("createTime"));
+//        goodModel.setUpdateTime(request.getParameter("updateTime"));
+//        goodModel.setHot(strTOInt(request.getParameter("hot")));
+//        goodModel.setHot(strTOInt(request.getParameter("banner")));
+//        return goodModel;
+//    }
 }
