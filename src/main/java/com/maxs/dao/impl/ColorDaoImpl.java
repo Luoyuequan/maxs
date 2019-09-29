@@ -11,7 +11,7 @@ public class ColorDaoImpl implements IColourDao {
 
     @Override
     public List<Map> getColour(String goodsId) {
-        String sql = "select * from colour where good_id = ?";
+        String sql = "select colour_id colourId,good_id goodId,colour_name colourName,colour_url colourUrl from colour where good_id = ?";
 
         Object[] objects = new Object[]{goodsId};
         return JDBC.excuteQuery(sql,objects);
