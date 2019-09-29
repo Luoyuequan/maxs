@@ -21,3 +21,4 @@ public interface IGoodDao {
     //修改
     int updateGoodByID(GoodModel channel);
 }
+
