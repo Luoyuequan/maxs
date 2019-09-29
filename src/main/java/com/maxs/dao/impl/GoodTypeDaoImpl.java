@@ -14,9 +14,14 @@ public class GoodTypeDaoImpl implements IGoodTypeDao {
      * @return 商品分类信息列表
      */
     @Override
-    public List<Map> listGoodTypeInfo() {
-        String sql = "select * from good_type";
-        return JDBC.excuteQuery(sql);
+    public List<Map> listGoodTypeInfo(GoodTypeModel goodTypeModel) {
+        String sql = "select good_type_id as goodTypeId,type_name as typeName," +
+                "parent_id as parentId,create_time as createTime,update_time as updateTime," +
+                "admin_id as adminId from good_type where `status` = ?";
+        Object[] param = new Object[]{
+                goodTypeModel.getStatus() == 0 ? 1 : goodTypeModel.getStatus()
+        };
+        return JDBC.excuteQuery(sql,param);
     }
 
     /**
@@ -45,13 +50,16 @@ public class GoodTypeDaoImpl implements IGoodTypeDao {
      */
     @Override
     public int updateGoodTypeInfo(GoodTypeModel goodTypeModel) {
-        String sql = "update good_type set type_name = ?,parent_id = ?,update_time = ?,admin_id = ? where good_type_id = ?";
+        String sql = "update " +
+                "good_type set type_name = ?,parent_id = ?,update_time = ?,admin_id = ? " +
+                "where good_type_id = ? and `status` = ?";
         Object[] param = new Object[]{
                 goodTypeModel.getTypeName(),
                 goodTypeModel.getParentId(),
                 goodTypeModel.getUpdateTime(),
                 goodTypeModel.getAdminId(),
-                goodTypeModel.getGoodTypeId()
+                goodTypeModel.getGoodTypeId(),
+                goodTypeModel.getStatus() == 0 ? 1 : goodTypeModel.getStatus()
         };
         return JDBC.executeUpdate(sql, param);
     }
@@ -66,7 +74,7 @@ public class GoodTypeDaoImpl implements IGoodTypeDao {
     public int updateGoodTypeStatus(GoodTypeModel goodTypeModel) {
         String sql = "update good_type set `status` = ?,update_time = ?,admin_id = ? where good_type_id = ?";
         Object[] param = new Object[]{
-                goodTypeModel.getStatus(),
+                goodTypeModel.getStatus() == 0 ? 1 : goodTypeModel.getStatus(),
                 goodTypeModel.getUpdateTime(),
                 goodTypeModel.getAdminId(),
                 goodTypeModel.getGoodTypeId()

@@ -31,7 +31,7 @@ public class AdminController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Map login(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         String lastLoginTime = String.valueOf(System.currentTimeMillis());
         adminModel = requestIsJson.getJsonToModel(request, claszz);
         adminModel.setLastLoginTime(lastLoginTime);
@@ -47,7 +47,7 @@ public class AdminController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public Map logout(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         return adminService.logout();
     }
 
@@ -59,7 +59,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/listSingleInfo", method = RequestMethod.POST)
     public List<Map> listSingleInfo(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         adminModel = requestIsJson.getJsonToModel(request, claszz);
         return adminService.listSingleInfo(adminModel);
     }
@@ -72,7 +72,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/listAllInfo", method = RequestMethod.POST)
     public List<Map> listAllInfo(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         return adminService.listAllInfo();
     }
 
@@ -84,7 +84,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
     public List<Map> addAdmin(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         String createTime = String.valueOf(System.currentTimeMillis());
         adminModel = requestIsJson.getJsonToModel(request, claszz);
         adminModel.setCreateTime(createTime);
@@ -100,7 +100,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/deleteAdmin", method = RequestMethod.GET)
     public Map deleteAdmin(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int adminStatus = 2;
         adminModel = requestIsJson.getJsonToModel(request, claszz);
         adminModel.setStatus(adminStatus);

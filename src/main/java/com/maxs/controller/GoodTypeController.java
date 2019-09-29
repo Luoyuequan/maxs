@@ -29,8 +29,8 @@ public class GoodTypeController {
      */
     @RequestMapping(value = "/listAllInfo", method = RequestMethod.POST)
     public List<Map> listAllInfo(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        return goodTypeService.listAllInfo();
+        goodTypeModel = requestIsJson.getJsonToModel(request,claszz);
+        return goodTypeService.listAllInfo(goodTypeModel);
     }
 
     /**
@@ -41,7 +41,7 @@ public class GoodTypeController {
      */
     @RequestMapping(value = "/addGoodType", method = RequestMethod.POST)
     public List<Map> addGoodType(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        
         String createTime = String.valueOf(System.currentTimeMillis());
         goodTypeModel = requestIsJson.getJsonToModel(request,claszz);
         goodTypeModel.setCreateTime(createTime);
@@ -57,7 +57,7 @@ public class GoodTypeController {
      */
     @RequestMapping(value = "/deleteGoodType", method = RequestMethod.POST)
     public List<Map> deleteGoodType(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        
         int status = 2;
         goodTypeModel = requestIsJson.getJsonToModel(request,claszz);
         goodTypeModel.setStatus(status);
@@ -72,7 +72,7 @@ public class GoodTypeController {
      */
     @RequestMapping(value = "/updateGoodTypeInfo", method = RequestMethod.POST)
     public List<Map> updateGoodTypeInfo(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        
         String updateTime = String.valueOf(System.currentTimeMillis());
         goodTypeModel = requestIsJson.getJsonToModel(request,claszz);
         goodTypeModel.setUpdateTime(updateTime);

@@ -11,7 +11,7 @@ public interface IGoodTypeDao {
      *
      * @return 商品分类信息列表
      */
-    List<Map> listGoodTypeInfo();
+    List<Map> listGoodTypeInfo(GoodTypeModel goodTypeModel);
 
     /**
      * 新增商品分类信息
