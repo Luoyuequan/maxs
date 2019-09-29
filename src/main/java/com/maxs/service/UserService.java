@@ -41,15 +41,15 @@ public class UserService {
         Map<String, Object> data = new HashMap<>();
         if (list.size() > 0) {
             data.put("status", 0);
-            data.put("msg", "用户已存在");
+            data.put("msg", "注册失败,用户已存在");
         } else {
             int insertResult = userDaoImpl.insertUserInfo(userModel);
             if (insertResult > 0) {
                 data.put("status", 1);
-                data.put("msg", "新增成功");
+                data.put("msg", "注册成功");
             } else {
                 data.put("status", 0);
-                data.put("msg", "新增失败");
+                data.put("msg", "注册失败,请重新尝试");
             }
         }
         return data;
@@ -61,7 +61,7 @@ public class UserService {
         if (list.size() > 0) {
             if (!userModel.getPw().equals(list.get(0).get("pw"))) {
                 data.put("status", 0);
-                data.put("msg", "登录失败");
+                data.put("msg", "登录失败,账号或密码有误");
             } else {
                 data.put("userId", list.get(0).get("userId"));
                 data.put("status", 1);
@@ -70,7 +70,7 @@ public class UserService {
             }
         } else {
             data.put("status", 0);
-            data.put("msg", "登录失败");
+            data.put("msg", "登录失败,用户不存在");
         }
         return data;
     }
