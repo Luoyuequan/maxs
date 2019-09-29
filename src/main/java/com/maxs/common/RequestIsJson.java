@@ -15,10 +15,12 @@ public class RequestIsJson<T> {
             while ((n = input.read()) != -1) {
                 sb.append((char) n);
             }
+            if (sb.length() == 0){
+                sb.append("{}");
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            return (T) JSON.parseObject(sb.toString(),claszz);
         }
+        return (T) JSON.parseObject(sb.toString(), claszz);
     }
 }

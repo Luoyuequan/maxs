@@ -18,8 +18,8 @@ public class GoodTypeService {
         this.goodTypeDaoImpl = new GoodTypeDaoImpl();
     }
 
-    public List<Map> listAllInfo() {
-        return goodTypeDaoImpl.listGoodTypeInfo();
+    public List<Map> listAllInfo(GoodTypeModel goodTypeModel) {
+        return goodTypeDaoImpl.listGoodTypeInfo(goodTypeModel);
     }
 
     public List<Map> addGoodType(GoodTypeModel goodTypeModel) {

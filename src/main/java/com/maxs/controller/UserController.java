@@ -54,7 +54,7 @@ public class UserController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public Map logout(HttpServletRequest request, HttpServletResponse response) {
         //*表示允许所有域名跨域
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         return userService.logout();
     }
 
@@ -66,7 +66,7 @@ public class UserController {
      */
     @RequestMapping(value = "/baseInfo", method = RequestMethod.POST)
     public List<Map> baseInfo(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 //        int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         userModel = requestIsJson.getJsonToModel(request, claszz);
         return userService.listBaseInfo(userModel);
@@ -80,7 +80,7 @@ public class UserController {
      */
     @RequestMapping(value = "/moreInfo", method = RequestMethod.POST)
     public List<Map> moreInfo( HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         userModel = requestIsJson.getJsonToModel(request, claszz);
         return userService.listMoreInfo(userModel);
@@ -94,7 +94,7 @@ public class UserController {
      */
     @RequestMapping(value = "/allUserInfo", method = RequestMethod.POST)
     public List<Map> allUserInfo(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         return userService.listAllUserInfo();
     }
 
@@ -106,7 +106,7 @@ public class UserController {
      */
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
     public Map registerUser(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 //        String userAccount = request.getParameter("userAccount") == null ? "" : request.getParameter("userAccount");
 //        String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
         String createTime = String.valueOf(System.currentTimeMillis());
@@ -124,7 +124,7 @@ public class UserController {
      */
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
     public Map deleteUser(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int userStatus = 2;
         userModel = requestIsJson.getJsonToModel(request, claszz);
         userModel.setStatus(userStatus);
@@ -139,7 +139,7 @@ public class UserController {
      */
     @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
     public Map updateUserInfo(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         int sex = request.getParameter("sex") == null ? 0 : Integer.parseInt(request.getParameter("sex"));
         int userType = request.getParameter("userType") == null ? 1 : Integer.parseInt(request.getParameter("userType"));
@@ -156,7 +156,7 @@ public class UserController {
      */
     @RequestMapping(value = "/changePw", method = RequestMethod.POST)
     public Map changePw(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
         userModel = requestIsJson.getJsonToModel(request, claszz);
