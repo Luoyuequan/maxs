@@ -12,6 +12,7 @@ import java.util.Map;
  * @author: Wu Guo
  * @create: 2019-09-26 11:36
  */
+@CrossOrigin
 @RestController
 @ResponseBody
 @RequestMapping("/good")

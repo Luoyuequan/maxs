@@ -2,10 +2,7 @@ package com.maxs.controller;
 
 import com.maxs.model.ChannelModel;
 import com.maxs.service.ChannelService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +13,9 @@ import java.util.Map;
  * @create: 2019-09-25 16:50
  */
 
+@CrossOrigin
 @RestController
+@ResponseBody
 @RequestMapping("/channel")
 public class ChannelController {
     private ChannelService channelService = new ChannelService();

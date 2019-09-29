@@ -17,16 +17,31 @@ import java.util.Map;
 public class GoodDaoImpl implements IGoodDao {
     @Override
     public List<Map> listGoodAll() {
-        String sql = "SELECT good_id as goodID,good_name as goodName," +
-                "type_id as typeID,channel_id as channelID," +
-                "price,admin_id as adminID,create_time as createTime," +
-                "update_time as updateTime,hot,banner,`status`" +
-                " FROM good";
+        String sql = "SELECT\n" +
+                "\tg.good_id AS goodID,\n" +
+                "\tg.good_name AS goodName,\n" +
+                "\tgt.type_name AS typeName,\n" +
+                "\tc.channel_name AS channelName,\n" +
+                "\tg.price,\n" +
+                "\ta.admin_name AS adminName,\n" +
+                "\tg.create_time AS createTime,\n" +
+                "\tg.update_time AS updateTime,\n" +
+                "\tg.hot,\n" +
+                "\tg.banner,\n" +
+                "\tg.`status` \n" +
+                "FROM\n" +
+                "\tgood g\n" +
+                "\tLEFT JOIN admin a ON g.admin_id = a.admin_id \n" +
+                "\tLEFT JOIN good_type gt ON g.type_id=gt.good_type_id\n" +
+                "\tLEFT JOIN channel c ON g.channel_id=c.channel_id\n" +
+                "WHERE\n" +
+                "\tg.`status` = 1\n";
         return JDBC.excuteQuery(sql);
     }
 
     /**
      * 〈根据ID获取信息〉
+     *
      * @Param: [goodID]
      * @Return: java.util.List<java.util.Map>
      * @Author: WuGuo
@@ -34,16 +49,32 @@ public class GoodDaoImpl implements IGoodDao {
      */
     @Override
     public List<Map> getGoodByID(int goodID) {
-        String sql = "SELECT good_id as goodID,good_name as goodName," +
-                "type_id as typeID,channel_id as channelID," +
-                "price,admin_id as adminID,create_time as createTime," +
-                "update_time as updateTime,hot,banner,`status`" +
-                " FROM good WHERE good_id=?";
+        String sql = "SELECT\n" +
+                "\tg.good_id AS goodID,\n" +
+                "\tg.good_name AS goodName,\n" +
+                "\tgt.type_name AS typeName,\n" +
+                "\tc.channel_name AS channelName,\n" +
+                "\tg.price,\n" +
+                "\ta.admin_name AS adminName,\n" +
+                "\tg.create_time AS createTime,\n" +
+                "\tg.update_time AS updateTime,\n" +
+                "\tg.hot,\n" +
+                "\tg.banner,\n" +
+                "\tg.`status` \n" +
+                "FROM\n" +
+                "\tgood g\n" +
+                "\tLEFT JOIN admin a ON g.admin_id = a.admin_id \n" +
+                "\tLEFT JOIN good_type gt ON g.type_id=gt.good_type_id\n" +
+                "\tLEFT JOIN channel c ON g.channel_id=c.channel_id\n" +
+                "WHERE\n" +
+                "\tg.`status` = 1\n" +
+                "\tAND g.good_id=?";
         return JDBC.excuteQuery(sql, new Object[]{goodID});
     }
 
     /**
      * 〈根据ID进行删除，即修改状态值〉
+     *
      * @Param: [goodID]
      * @Return: int
      * @Author: WuGuo
@@ -57,6 +88,7 @@ public class GoodDaoImpl implements IGoodDao {
 
     /**
      * 〈添加信息〉
+     *
      * @Param: [good]
      * @Return: int
      * @Author: WuGuo
@@ -76,6 +108,7 @@ public class GoodDaoImpl implements IGoodDao {
 
     /**
      * 〈根据ID进行信息修改〉
+     *
      * @Param: [good]
      * @Return: int
      * @Author: WuGuo
@@ -89,7 +122,7 @@ public class GoodDaoImpl implements IGoodDao {
         Object[] object = new Object[]{good.getGoodName(), good.getTypeID(),
                 good.getChannelID(), good.getPrice(), good.getAdminID(),
                 good.getCreateTime(), good.getUpdateTime(),
-                good.getHot(), good.getBanner(),good.getGoodID()};
+                good.getHot(), good.getBanner(), good.getGoodID()};
         return JDBC.executeUpdate(sql, object);
     }
 }
