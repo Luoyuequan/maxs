@@ -14,7 +14,7 @@ public interface IChannelDao {
     List<Map> getChannelByID(int channelID);
 
     //根据ID删除
-    int removeChannelByID(int channelID);
+    int removeChannelByID(ChannelModel channel);
 
     //添加
     int saveChannel(ChannelModel channel);

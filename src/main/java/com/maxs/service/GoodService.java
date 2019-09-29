@@ -54,7 +54,7 @@ public class GoodService {
 
     //删
     public Map deleteC(GoodModel goodModel) {
-        int i = goodDao.removeGoodByID(goodModel.getGoodID());
+        int i = goodDao.removeGoodByID(goodModel);
 
         return result(i);
     }

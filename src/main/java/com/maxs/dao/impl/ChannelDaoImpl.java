@@ -68,9 +68,9 @@ public class ChannelDaoImpl implements IChannelDao {
      * @Date: 2019/9/26 10:51
      */
     @Override
-    public int removeChannelByID(int channelID) {
-        String sql = "UPDATE channel SET `status` = 0 WHERE channel_id = ?";
-        return JDBC.executeUpdate(sql, new Object[]{channelID});
+    public int removeChannelByID(ChannelModel channel) {
+        String sql = "UPDATE channel SET update_time=?,`status` = 0 WHERE channel_id = ?";
+        return JDBC.executeUpdate(sql, new Object[]{channel.getUpdateTime(), channel.getChannelID()});
     }
 
     /**

@@ -31,7 +31,7 @@ public class ChannelService {
 
     //删
     public Map deleteC(ChannelModel channel) {
-        int i = channelDao.removeChannelByID(channel.getChannelID());
+        int i = channelDao.removeChannelByID(channel);
         return result(i);
     }
 

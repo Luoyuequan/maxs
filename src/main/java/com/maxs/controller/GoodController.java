@@ -59,6 +59,8 @@ public class GoodController {
     @RequestMapping("/remove")
     @PostMapping
     public Map remove(@RequestBody GoodModel goodModel) {
+        long l = System.currentTimeMillis();
+        goodModel.setUpdateTime(Long.toString(l));
         return goodService.deleteC(goodModel);
     }
 
@@ -73,6 +75,8 @@ public class GoodController {
     @RequestMapping("/save")
     @PostMapping
     public Map save(@RequestBody GoodModel goodModel) {
+        long l = System.currentTimeMillis();
+        goodModel.setUpdateTime(Long.toString(l));
         return goodService.saveC(goodModel);
     }
 
@@ -87,6 +91,9 @@ public class GoodController {
     @RequestMapping("/update")
     @PostMapping
     public Map update(@RequestBody GoodModel goodModel) {
+        long l = System.currentTimeMillis();
+        goodModel.setUpdateTime(Long.toString(l));
+        goodModel.setCreateTime(Long.toString(l));
         return goodService.updateC(goodModel);
     }
 
