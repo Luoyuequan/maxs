@@ -4,6 +4,8 @@ import com.maxs.model.ChannelModel;
 import com.maxs.service.ChannelService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +46,8 @@ public class ChannelController {
      */
     @RequestMapping("/get")
     public List<Map> getChannel(@RequestBody ChannelModel channel) {
+//        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        System.out.println(channel.getChannelID());
         return channelService.getChannel(channel);
     }
 
@@ -71,7 +75,7 @@ public class ChannelController {
     @RequestMapping("/save")
     @ResponseBody
     public Map save(@RequestBody ChannelModel channel) {
-        return  channelService.saveC(channel);
+        return channelService.saveC(channel);
     }
 
     /**
