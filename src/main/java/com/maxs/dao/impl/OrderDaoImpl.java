@@ -11,7 +11,7 @@ public class OrderDaoImpl implements IOrderDao {
     @Override
     public List<Map> getOrder(OrderModel orderModel) {
 
-        String sql = "select * from `order` where user_id = ? and state = ? and status = 1";
+        String sql = "select order_id orderId,money,user_id userId,create_time createTime,update_time ,state , status updateTime from `order` where user_id = ? and state = ? and status = 1";
         Object[] objects = new Object[]{orderModel.getUserId(),orderModel.getState()};
         return JDBC.excuteQuery(sql, objects);
     }

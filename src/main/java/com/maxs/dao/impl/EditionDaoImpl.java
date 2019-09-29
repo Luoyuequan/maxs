@@ -11,7 +11,7 @@ public class EditionDaoImpl implements IEditionDao {
     @Override
     public List<Map> getEditon(String goodsId) {
 
-        String sql = "select * from edition where good_id = ? and state = 1";
+        String sql = "select edition_id editionId,good_id goodId,edition_name editionName,state  from edition where good_id = ? and state = 1";
         Object[] objects = new Object[1];
         objects[0] = goodsId;
         return JDBC.excuteQuery(sql,objects);
