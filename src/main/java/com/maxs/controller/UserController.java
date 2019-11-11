@@ -83,7 +83,6 @@ public class UserController {
     @RequestMapping(value = "/moreInfo", method = RequestMethod.POST)
     public List<Map> moreInfo(HttpServletRequest request, HttpServletResponse response) {
         //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
         userModel = requestIsJson.getJsonToModel(request, claszz);
         return userService.listMoreInfo(userModel);
     }
@@ -153,8 +152,6 @@ public class UserController {
      */
     @RequestMapping(value = "/changePw", method = RequestMethod.POST)
     public Map changePw(HttpServletRequest request, HttpServletResponse response) {
-        int userId = request.getParameter("userId") == null ? 0 : Integer.parseInt(request.getParameter("userId"));
-        String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
         userModel = requestIsJson.getJsonToModel(request, claszz);
         return userService.changePw(userModel);
     }

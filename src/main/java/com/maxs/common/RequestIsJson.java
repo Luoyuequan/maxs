@@ -7,9 +7,7 @@ import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class RequestIsJson<T> {
     public T getJsonToModel(HttpServletRequest request, Class claszz) {
